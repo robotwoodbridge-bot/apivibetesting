@@ -1,0 +1,128 @@
+name: API Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install TechShop API dependencies
+        run: npm install
+        working-directory: techshop-api/broken-app
+
+      - name: Start TechShop API
+        run: node server.js &
+        working-directory: techshop-api/broken-app
+
+      - name: Wait for API to be ready
+        run: |
+          sleep 5
+          curl --retry 5 --retry-delay 2 --retry-connrefused \
+            http://localhost:3000/health
+
+      # ── Postman / Newman ──────────────────────────────────────────────────
+      - name: Install Newman
+        run: npm install -g newman newman-reporter-html
+
+      - name: Run Postman collection (Newman)
+        id: newman
+        continue-on-error: true
+        run: |
+          newman run techshop.postman_collection.json \
+            --env-var base_url=http://localhost:3000 \
+            --reporters cli,html \
+            --reporter-html-export newman-report.html
+
+      # ── Bruno ─────────────────────────────────────────────────────────────
+      - name: Install Bruno CLI
+        run: npm install -g @usebruno/cli
+
+      - name: Run Bruno collection
+        id: bruno
+        continue-on-error: true
+        run: bru run techshop-bruno/ --env local
+
+      # ── Python / pytest ───────────────────────────────────────────────────
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install pytest requests pytest-html
+
+      - name: Run pytest
+        id: pytest
+        continue-on-error: true
+        env:
+          BASE_URL: http://localhost:3000
+          TEST_EMAIL: ${{ secrets.TEST_EMAIL }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+        run: |
+          pytest test_techshop.py -v \
+            --html=pytest-report.html \
+            --self-contained-html
+
+      # ── Robot Framework ───────────────────────────────────────────────────
+      - name: Install Robot Framework
+        run: pip install robotframework robotframework-requests
+
+      - name: Run Robot Framework
+        id: robot
+        continue-on-error: true
+        env:
+          BASE_URL: http://localhost:3000
+          TEST_EMAIL: ${{ secrets.TEST_EMAIL }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+        run: |
+          robot --variable BASE_URL:http://localhost:3000 \
+                --outputdir robot-results \
+                techshop.robot
+
+      # ── Upload reports ────────────────────────────────────────────────────
+      - name: Upload Newman report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-report
+          path: newman-report.html
+
+      - name: Upload pytest report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-report
+          path: pytest-report.html
+
+      - name: Upload Robot Framework report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: robot-report
+          path: robot-results/
+
+      # ── Fail the build if any suite failed ────────────────────────────────
+      - name: Check overall test result
+        if: always()
+        run: |
+          if [ "${{ steps.newman.outcome }}" = "failure" ] || \
+             [ "${{ steps.bruno.outcome }}" = "failure" ] || \
+             [ "${{ steps.pytest.outcome }}" = "failure" ] || \
+             [ "${{ steps.robot.outcome }}" = "failure" ]; then
+            echo "❌ One or more test suites failed"
+            exit 1
+          fi
+          echo "✅ All test suites passed"

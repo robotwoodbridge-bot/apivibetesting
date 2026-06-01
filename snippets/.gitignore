@@ -1,0 +1,16 @@
+# Credentials — never commit these
+.env
+
+# Python
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Test reports (generated — no need to commit)
+pytest-report.html
+newman-report.html
+robot-results/
+
+# Node
+node_modules/
