@@ -3,6 +3,9 @@
 The Postman MCP server lets Cursor (and other AI IDEs) create and manage
 Postman collections directly via the Postman API — no manual import needed.
 
+**Security rule: the API key lives in `.env` only. It must never be written
+into a config file that could be committed to Git.**
+
 ---
 
 ## Step 1 — Get Your Postman API Key
@@ -15,29 +18,47 @@ Postman collections directly via the Postman API — no manual import needed.
 
 ---
 
-## Step 2 — Configure the MCP Server
+## Step 2 — Save the Key to .env
+
+Add the key to your project `.env` file (not a config file):
+
+```
+POSTMAN_API_KEY=your-key-here
+```
+
+Confirm `.env` is in your `.gitignore`. It is included in `snippets/.gitignore`.
+
+---
+
+## Step 3 — Install dotenv-cli
+
+`dotenv-cli` lets the MCP config load the key from `.env` at startup
+without the key ever appearing in the config file itself:
+
+```bash
+npm install -g dotenv-cli
+```
+
+---
+
+## Step 4 — Configure the MCP Server
 
 ### Cursor
 
-Create or edit the file `~/.cursor/mcp.json` (global config) or
-`.cursor/mcp.json` in your project root (project-level config):
+Create or edit `~/.cursor/mcp.json` (global) or `.cursor/mcp.json` (project):
 
 ```json
 {
   "mcpServers": {
     "postman": {
-      "command": "npx",
-      "args": ["-y", "@postman/mcp-server"],
-      "env": {
-        "POSTMAN_API_KEY": "YOUR_KEY_HERE"
-      }
+      "command": "dotenv",
+      "args": ["-e", ".env", "--", "npx", "-y", "@postman/mcp-server"]
     }
   }
 }
 ```
 
-The ready-to-edit file is at `snippets/mcp-config-cursor.json` — paste your
-key and copy it to the correct location.
+The ready-to-use file is at `snippets/mcp-config-cursor.json`.
 
 ### VS Code + GitHub Copilot
 
@@ -48,39 +69,35 @@ Create `.vscode/mcp.json` in your project:
   "servers": {
     "postman": {
       "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@postman/mcp-server"],
-      "env": {
-        "POSTMAN_API_KEY": "YOUR_KEY_HERE"
-      }
+      "command": "dotenv",
+      "args": ["-e", ".env", "--", "npx", "-y", "@postman/mcp-server"]
     }
   }
 }
 ```
 
-The ready-to-edit file is at `snippets/mcp-config-vscode.json`.
+The ready-to-use file is at `snippets/mcp-config-vscode.json`.
 
 ### Windsurf
 
 Open **Windsurf Settings → MCP** and add a new server entry:
-- Command: `npx`
-- Args: `-y @postman/mcp-server`
-- Environment variable: `POSTMAN_API_KEY=YOUR_KEY_HERE`
+- Command: `dotenv`
+- Args: `-e .env -- npx -y @postman/mcp-server`
 
 ### Antigravity
 
 Open **Settings → Integrations → MCP Servers** and add:
 - Name: `postman`
-- Command: `npx -y @postman/mcp-server`
-- Env: `POSTMAN_API_KEY=YOUR_KEY_HERE`
+- Command: `dotenv -e .env -- npx -y @postman/mcp-server`
 
 ---
 
-## Step 3 — Restart Your AI IDE
+## Step 5 — Restart Your AI IDE
 
-After saving the config, fully restart your AI IDE. The Postman MCP tools
-should now appear in the chat — you can verify by typing:
-`What Postman MCP tools do you have available?`
+After saving the config, fully restart your AI IDE. Verify the MCP is connected:
+
+1. **Cursor Settings → Features → MCP** — Postman server should show a green indicator
+2. **In the chat**, type: `What MCP tools do you have available?` — Postman tools should be listed
 
 ---
 
@@ -98,8 +115,10 @@ should now appear in the chat — you can verify by typing:
 
 ## Troubleshooting
 
-**"npx: not found"** — Install Node.js from nodejs.org (includes npx)
+**"dotenv: not found"** — Run `npm install -g dotenv-cli` first.
 
-**"Unauthorized"** — Your API key is wrong or expired. Regenerate it in Postman Settings.
+**"npx: not found"** — Install Node.js from nodejs.org (includes npx).
+
+**"Unauthorized"** — Your API key in `.env` is wrong or expired. Regenerate it in Postman Settings.
 
 **MCP tools not appearing** — Make sure you fully restarted the IDE after editing the config file.

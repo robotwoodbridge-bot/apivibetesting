@@ -74,35 +74,39 @@ Open the Cursor terminal and paste this prompt into the Cursor chat.
 Have your Postman API key ready (Postman → Settings → API Keys → Generate).
 
 ```
-Help me configure the Postman MCP server for Cursor so that Cursor can
-create and manage Postman collections directly.
+Help me configure the Postman MCP server securely — the API key must be
+stored in .env only, never written into any config file.
 
 1. Ask me for my Postman API key (do not proceed until I provide it)
 
-2. Detect which AI IDE I am using:
-   - If Cursor: create or update ~/.cursor/mcp.json
-   - If VS Code: create or update .vscode/mcp.json in the project root
-   - If unsure: create ~/.cursor/mcp.json (Cursor default)
+2. Add the key to the project .env file (create it if it does not exist):
+   POSTMAN_API_KEY=<the key I provided>
+   Confirm .env is listed in .gitignore — if not, add it.
 
-3. Write the MCP config with the key I provided:
+3. Install dotenv-cli globally so the MCP config can load the key from .env:
+   npm install -g dotenv-cli
+
+4. Detect which AI IDE I am using and create the MCP config:
+   - Cursor: create or update ~/.cursor/mcp.json
+   - VS Code: create or update .vscode/mcp.json in the project root
+
+   Write this config (no API key in the file — it loads from .env at startup):
    For Cursor (~/.cursor/mcp.json):
    {
      "mcpServers": {
        "postman": {
-         "command": "npx",
-         "args": ["-y", "@postman/mcp-server"],
-         "env": {
-           "POSTMAN_API_KEY": "<my key here>"
-         }
+         "command": "dotenv",
+         "args": ["-e", ".env", "--", "npx", "-y", "@postman/mcp-server"]
        }
      }
    }
 
-4. Confirm the file was written and show me the path
+5. Confirm the config file was written and show me the path.
+   Confirm the API key is in .env and NOT in the config file.
 
-5. Tell me to fully restart Cursor/my IDE for the MCP server to activate
+6. Tell me to fully restart Cursor/my IDE for the MCP server to activate
 
-6. After I confirm I have restarted, tell me to verify in two ways:
+7. After I confirm I have restarted, tell me to verify in two ways:
    - Open Cursor Settings → Features → MCP and confirm the Postman server
      shows a green status indicator
    - In this chat, type: what MCP tools do you have available?
