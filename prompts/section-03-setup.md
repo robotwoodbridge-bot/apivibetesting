@@ -6,6 +6,7 @@
 | Prompt 1 — SSH Setup and Clone | **Section 3, Clip 2** — Fork and Clone the Course Repo |
 | Prompt 2 — Python + pytest Setup | **Section 3, Clip 4** — Install Python + pytest + requests |
 | Prompt 3 — Robot Framework Setup | **Section 3, Clip 5** — Install Robot Framework + RequestsLibrary |
+| Prompt 4 — Set Up Environment Variables | **Section 3, Clip 6** — Set Up Environment Variables |
 
 ---
 
@@ -97,7 +98,51 @@ Run each step in the terminal and wait for my confirmation before continuing.
    All three should succeed without errors.
 
 4. Confirm the full list of installed packages looks correct:
-   pip list | grep -i -E "robot|requests|pytest|dotenv"
+   pip list | grep -i -E "robot|requests|pytest"
+
+Run each step one at a time and wait for my confirmation before continuing.
+```
+
+---
+
+## Prompt 4: Set Up Environment Variables
+*Used in: Section 3, Clip 6 — "Set Up Environment Variables"*
+
+Paste this prompt into the Cursor chat:
+
+```
+Help me set up all the environment variables needed for this course.
+Variables must be stored in the shell profile — NOT in any file inside
+the project folder. Cursor indexes project files so any key there is
+visible to the AI. The shell profile is outside the project and safe.
+
+Run each step in the terminal and wait for my confirmation before continuing.
+
+1. Detect my operating system and open the correct shell profile:
+   - Mac (zsh):  open ~/.zshrc
+   - Mac (bash): open ~/.bashrc
+   - Linux:      open ~/.bashrc
+   - Windows: tell me to go to Start → Edit the system environment variables
+              → Environment Variables → User variables → New
+
+2. Add these variables to the shell profile (for Mac/Linux):
+   export BASE_URL=http://localhost:3000
+   export TEST_EMAIL=demo@techshop.com
+   export TEST_PASSWORD=password123
+
+3. For POSTMAN_API_KEY — add the line but leave the value blank for now:
+   export POSTMAN_API_KEY=
+   Tell me we will fill this in during Section 5.
+
+4. Reload the shell profile:
+   source ~/.zshrc   (or source ~/.bashrc on Linux/bash)
+
+5. Verify all variables are set by running:
+   echo "BASE_URL=$BASE_URL"
+   echo "TEST_EMAIL=$TEST_EMAIL"
+   echo "TEST_PASSWORD=$TEST_PASSWORD"
+   echo "POSTMAN_API_KEY=$POSTMAN_API_KEY"
+   The first three should print their values. POSTMAN_API_KEY will be empty for now.
 
 Run each step one at a time and wait for my confirmation before continuing.
 ```
