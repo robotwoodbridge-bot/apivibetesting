@@ -6,6 +6,7 @@
 | Prompt 1 — Generate Bruno Collection | **Section 6, Clip 2** — Cursor Writes .bru Files Directly |
 | Prompt 2 — Add a Missing Test | **Section 6, Clip 3** — Running Bruno Tests and Reading Results |
 | Prompt 3 — Fix a .bru Assertion | **Section 6, Clip 3** — Running Bruno Tests and Reading Results |
+| Prompt 4 — Install Bruno CLI and Run Collection | **Section 6, Clip 4** — Bruno CLI |
 
 ---
 
@@ -69,4 +70,28 @@ techshop-bruno folder. Generate the missing .bru files.
 The file [filename].bru has a failing assertion. Read swagger.json to check
 what status code and response shape the spec defines for this scenario,
 then rewrite the test block in the .bru file to match the spec exactly.
+```
+
+---
+
+## Prompt 4: Install Bruno CLI and Run Collection
+*Used in: Section 6, Clip 4 — "Bruno CLI"*
+
+```
+Help me install the Bruno CLI and run the test collection from the terminal.
+Run each step and wait for my confirmation before continuing.
+
+1. Install the Bruno CLI globally:
+   npm install -g @usebruno/cli
+
+2. Verify the install:
+   bru --version
+
+3. Run the full collection against the local API:
+   bru run techshop-bruno/ --env local
+
+4. Tell me how many tests passed and failed from the summary output
+
+5. Also show me how to run just one subfolder (auth only) as an example:
+   bru run techshop-bruno/auth/ --env local
 ```

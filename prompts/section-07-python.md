@@ -7,6 +7,7 @@
 | Prompt 2 — Add Parametrize for Boundary Values | **Section 7, Clip 4** — Fixtures, Parametrize, and How Cursor Structures the Code |
 | Prompt 3 — Add pytest.ini Config | **Section 7, Clip 3** — Running pytest and Reading the Output |
 | Prompt 4 — Check Coverage Against the Spec | **Section 7, Clip 4** — Fixtures, Parametrize, and How Cursor Structures the Code |
+| Prompt 5 — Run pytest and Capture Output | **Section 7, Clip 3** — Running pytest and Reading the Output |
 
 ---
 
@@ -87,4 +88,34 @@ against the test functions in test_techshop.py.
 
 List any endpoints or response codes from the spec that are not yet
 covered by a test, and generate the missing test functions.
+```
+
+---
+
+## Prompt 5: Run pytest and Capture Output
+*Used in: Section 7, Clip 3 — "Running pytest and Reading the Output"*
+
+Make sure the virtual environment is active and the TechShop API is running on port 3000.
+
+```
+Help me run the pytest test suite and review the results.
+Run each step in the terminal and wait for my confirmation before continuing.
+
+1. Confirm the virtual environment is active (should see (venv) in the prompt).
+   If not, activate it:
+   - Mac/Linux: source venv/bin/activate
+   - Windows: venv\Scripts\activate
+
+2. Run the tests with verbose output:
+   pytest test_techshop.py -v
+
+3. After the run, summarise:
+   - How many tests passed
+   - How many tests failed
+   - The names of any failing tests
+
+4. Run again with the HTML report:
+   pytest test_techshop.py -v --html=pytest-report.html --self-contained-html
+
+5. Confirm pytest-report.html was created in the project folder
 ```

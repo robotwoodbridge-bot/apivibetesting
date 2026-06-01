@@ -7,6 +7,7 @@
 | Prompt 2 — Override BASE_URL from Command Line | **Section 8, Clip 3** — Running Robot Framework and Reading the Report |
 | Prompt 3 — Extract Keywords to a Resource File | **Section 8, Clip 4** — When Robot Framework Fits and When It Does Not |
 | Prompt 4 — Check Coverage Against the Spec | **Section 8, Clip 2** — Cursor Generates the Test Suite |
+| Prompt 5 — Run Robot Framework Suite | **Section 8, Clip 3** — Running Robot Framework and Reading the Report |
 
 ---
 
@@ -82,4 +83,30 @@ against the test cases in techshop.robot.
 
 List any endpoints or response codes from the spec that are not yet
 covered by a test case, and generate the missing test cases.
+```
+
+---
+
+## Prompt 5: Run Robot Framework Suite
+*Used in: Section 8, Clip 3 — "Running Robot Framework and Reading the Report"*
+
+Make sure the TechShop API is running on port 3000 and the virtual environment is active.
+
+```
+Help me run the Robot Framework test suite and review the results.
+Run each step in the terminal and wait for my confirmation before continuing.
+
+1. Run the full test suite and save reports to a robot-results folder:
+   robot --outputdir robot-results techshop.robot
+
+2. After the run, summarise:
+   - How many tests passed
+   - How many tests failed
+   - The names of any failing tests
+
+3. Confirm that robot-results/report.html and robot-results/log.html
+   were created — tell me to open report.html in my browser
+
+4. Show me how to run a single test by name as an example:
+   robot --test "Login With Wrong Password" techshop.robot
 ```
