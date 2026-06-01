@@ -13,14 +13,19 @@
 ## Prompt 1: Generate Bruno Collection
 *Used in: Section 6, Clip 2 — "Cursor Writes .bru Files Directly"*
 
-Use this prompt with your project folder open in Cursor and `swagger.json` present.
+Use this prompt with your project folder open in Cursor. Make sure `swagger.json` and `test-ideas.md` are present.
 
 ```
-Read swagger.json to understand all available endpoints, their request
-schemas, required fields, authentication requirements, and documented
-response codes.
+Read two files:
+- swagger.json — the full API spec with all endpoints, schemas, required
+  fields, authentication requirements, and documented response codes
+- test-ideas.md — the test strategy derived from the spec in Section 4,
+  listing happy paths, negative tests, and auth requirements per endpoint
 
-Generate a Bruno collection as .bru files based on the spec.
+Use both files as your source of truth. swagger.json defines the contract.
+test-ideas.md defines what to test. Together they give you complete coverage.
+
+Generate a Bruno collection as .bru files based on these files.
 
 Create the folder structure:
   techshop-bruno/
@@ -34,11 +39,8 @@ In the environments folder, create a file called local.bru that sets:
   baseUrl = http://localhost:3000
   authToken = (empty — will be populated after login)
 
-For each endpoint in the spec, generate one .bru file per test scenario:
-- The happy path (valid inputs, correct auth where required)
-- Every documented error response code (4xx) listed in the spec
-- Any endpoint with bearerAuth security should also have a separate
-  .bru file with no Authorization header, asserting 401
+For each endpoint, generate one .bru file per test scenario listed in
+test-ideas.md, verified against the response codes in swagger.json.
 
 Use {{baseUrl}} for the base URL and {{authToken}} for auth headers.
 

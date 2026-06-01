@@ -14,12 +14,17 @@
 ## Prompt 1: Generate the Full Robot Framework Test Suite
 *Used in: Section 8, Clip 2 — "Cursor Generates the Test Suite"*
 
-Make sure `swagger.json` is in your project folder and `.env` is set up (see `snippets/env-setup.md`).
+Make sure `swagger.json` and `test-ideas.md` are in your project folder and environment variables are set up (see `snippets/env-setup.md`).
 
 ```
-Read swagger.json to understand all available endpoints, their request
-schemas, required fields, authentication requirements, and documented
-response codes.
+Read two files:
+- swagger.json — the full API spec with all endpoints, schemas, required
+  fields, authentication requirements, and documented response codes
+- test-ideas.md — the test strategy derived from the spec in Section 4,
+  listing happy paths, negative tests, and auth requirements per endpoint
+
+Use both files as your source of truth. swagger.json defines the contract.
+test-ideas.md defines what to test. Together they give you complete coverage.
 
 Generate a Robot Framework test suite in a file called techshop.robot
 using RequestsLibrary.
@@ -34,11 +39,8 @@ Requirements:
     - POSTs to the login endpoint with ${EMAIL} and ${PASSWORD}
     - Asserts status is 200
     - Returns the token value from the response JSON body
-- Test Cases section: for each endpoint in the spec, write test cases covering:
-    - The happy path (valid inputs, correct auth where required)
-    - Every documented 4xx response code listed in the spec
-    - Any endpoint marked with bearerAuth security should also have a
-      test case with no Authorization header asserting status 401
+- Test Cases section: for each endpoint, write test cases covering every
+  scenario listed in test-ideas.md, verified against swagger.json
 - Use Suite Setup to create the HTTP session once before all tests
 - Use Suite Teardown to delete the session after all tests
 - Name test cases in plain readable English, e.g.:
@@ -78,11 +80,11 @@ Keep the Test Cases section in techshop.robot unchanged.
 *Used in: Section 8, Clip 2 — "Cursor Generates the Test Suite"*
 
 ```
-Read swagger.json and compare its endpoints and documented response codes
-against the test cases in techshop.robot.
+Read swagger.json and test-ideas.md, then compare both against the
+test cases in techshop.robot.
 
-List any endpoints or response codes from the spec that are not yet
-covered by a test case, and generate the missing test cases.
+List any scenarios from test-ideas.md or response codes from swagger.json
+that are not yet covered by a test case, and generate the missing ones.
 ```
 
 ---

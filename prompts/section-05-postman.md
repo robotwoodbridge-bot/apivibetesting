@@ -15,23 +15,25 @@
 *Used in: Section 5, Clip 3 — "Cursor Creates the Collection via MCP"*
 
 Use this prompt after configuring the Postman MCP server (Prompt 4 below).
-Make sure `swagger.json` is in your project folder.
+Make sure `swagger.json` and `test-ideas.md` are in your project folder.
 
 ```
 Use the Postman MCP to create a new collection in my Postman workspace
 called "TechShop API Tests".
 
-Read swagger.json to understand all available endpoints, their request
-schemas, required fields, authentication requirements, and documented
-response codes.
+Read two files:
+- swagger.json — the full API spec with all endpoints, schemas, required
+  fields, authentication requirements, and documented response codes
+- test-ideas.md — the test strategy we derived from the spec in Section 4,
+  listing happy paths, negative tests, and auth requirements per endpoint
 
-Based on the spec:
+Use both files as your source of truth. swagger.json defines the contract.
+test-ideas.md defines what to test. Together they give you complete coverage.
+
+Based on these files:
 - Create a folder for each tag (Auth, Products, Cart, Orders)
-- For each endpoint, generate requests covering:
-    - The happy path (valid inputs, correct auth)
-    - Every documented error response code (4xx) from the spec
-    - Any endpoint marked with bearerAuth security should also have
-      a test with no Authorization header asserting 401
+- For each endpoint, generate requests covering every scenario listed
+  in test-ideas.md, verified against the response codes in swagger.json
 - Write pm.test assertions for each request checking the expected status code
 - After the login request, save the token from the response body
   into a collection variable called authToken

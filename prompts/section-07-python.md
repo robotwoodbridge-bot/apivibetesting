@@ -14,12 +14,17 @@
 ## Prompt 1: Generate the Full Test Suite
 *Used in: Section 7, Clip 2 — "Cursor Writes the Test Suite"*
 
-Make sure `swagger.json` is in your project folder and `.env` is set up (see `snippets/env-setup.md`).
+Make sure `swagger.json` and `test-ideas.md` are in your project folder and environment variables are set up (see `snippets/env-setup.md`).
 
 ```
-Read swagger.json to understand all available endpoints, their request
-schemas, required fields, authentication requirements, and documented
-response codes.
+Read two files:
+- swagger.json — the full API spec with all endpoints, schemas, required
+  fields, authentication requirements, and documented response codes
+- test-ideas.md — the test strategy derived from the spec in Section 4,
+  listing happy paths, negative tests, and auth requirements per endpoint
+
+Use both files as your source of truth. swagger.json defines the contract.
+test-ideas.md defines what to test. Together they give you complete coverage.
 
 Generate a pytest test suite in a file called test_techshop.py
 using the requests library.
@@ -35,11 +40,8 @@ Requirements:
     - posts to the login endpoint with those credentials
     - asserts the response is 200
     - returns the token string from the response JSON
-- For each endpoint in the spec, write test functions covering:
-    - The happy path (valid inputs, correct auth where required)
-    - Every documented 4xx response code listed in the spec
-    - Any endpoint marked with bearerAuth security should also have
-      a test with no Authorization header asserting 401
+- For each endpoint, write test functions covering every scenario listed
+  in test-ideas.md, verified against the response codes in swagger.json
 - Use the auth_token fixture in any test that requires authentication
 - Name test functions descriptively, e.g.:
     test_login_valid_credentials
@@ -81,11 +83,11 @@ This ensures every pytest run automatically generates an HTML report.
 *Used in: Section 7, Clip 4 — "Fixtures, Parametrize, and How Cursor Structures the Code"*
 
 ```
-Read swagger.json and compare its endpoints and documented response codes
-against the test functions in test_techshop.py.
+Read swagger.json and test-ideas.md, then compare both against the
+test functions in test_techshop.py.
 
-List any endpoints or response codes from the spec that are not yet
-covered by a test, and generate the missing test functions.
+List any scenarios from test-ideas.md or response codes from swagger.json
+that are not yet covered by a test function, and generate the missing ones.
 ```
 
 ---
