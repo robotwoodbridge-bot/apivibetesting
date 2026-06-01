@@ -72,6 +72,8 @@ Read the swagger.json file in this project. List all the API endpoints and for e
 - Any authentication requirements
 
 Format it as a plain test ideas list, one endpoint per block.
+
+Save the output to a file called test-ideas.md in the project root.
 ```
 
 ### Expected output structure
