@@ -6,26 +6,23 @@
 # MAC / LINUX
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# 1. Open your shell profile in a text editor:
-#      Mac (zsh — default):  open ~/.zshrc
-#      Mac/Linux (bash):     open ~/.bashrc
+# Run these commands in your terminal — they append each variable permanently
+# to your shell profile and reload it in one step.
 #
-# 2. Paste these lines at the bottom of the file:
+# zsh (default on Mac):
 
-export BASE_URL=http://localhost:3000
-export TEST_EMAIL=demo@techshop.com
-export TEST_PASSWORD=password123
-export POSTMAN_API_KEY=         # fill in after Section 5
+echo 'export BASE_URL=http://localhost:3000' >> ~/.zshrc
+echo 'export TEST_EMAIL=demo@techshop.com' >> ~/.zshrc
+echo 'export TEST_PASSWORD=password123' >> ~/.zshrc
+echo 'export POSTMAN_API_KEY=' >> ~/.zshrc   # fill in the value after Postman setup in Section 5
+source ~/.zshrc
 
-# 3. Save the file, then reload it:
-#      source ~/.zshrc     (zsh)
-#      source ~/.bashrc    (bash)
-#
-# 4. Verify — run each line in the terminal, it should print the value:
-#      echo $BASE_URL
-#      echo $TEST_EMAIL
-#      echo $TEST_PASSWORD
-#      echo $POSTMAN_API_KEY
+# bash (Linux / some Mac setups) — replace ~/.zshrc with ~/.bashrc above
+
+# Verify — each command should print the value back:
+echo $BASE_URL
+echo $TEST_EMAIL
+echo $TEST_PASSWORD
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -41,21 +38,23 @@ export POSTMAN_API_KEY=         # fill in after Section 5
 #    BASE_URL             http://localhost:3000
 #    TEST_EMAIL           demo@techshop.com
 #    TEST_PASSWORD        password123
-#    POSTMAN_API_KEY      (fill in after Section 5)
+#    POSTMAN_API_KEY      (fill in after Postman setup in Section 5)
 #
 # 4. Click OK on all dialogs, then restart your terminal and IDE
 #
-# 5. Verify — run each line in Command Prompt or PowerShell:
-#    echo %BASE_URL%              (Command Prompt)
-#    echo $env:BASE_URL           (PowerShell)
+# Verify — run in Command Prompt or PowerShell:
+#    echo %BASE_URL%          (Command Prompt)
+#    echo $env:BASE_URL       (PowerShell)
 #
 #
-# Option B — PowerShell (permanent, current user)
-# Run these in PowerShell as Administrator:
-
+# Option B — PowerShell (run each line, no administrator needed)
+#
 # [System.Environment]::SetEnvironmentVariable("BASE_URL", "http://localhost:3000", "User")
 # [System.Environment]::SetEnvironmentVariable("TEST_EMAIL", "demo@techshop.com", "User")
 # [System.Environment]::SetEnvironmentVariable("TEST_PASSWORD", "password123", "User")
 # [System.Environment]::SetEnvironmentVariable("POSTMAN_API_KEY", "", "User")
 #
-# Restart your terminal after running these.
+# Restart your terminal after running, then verify:
+# echo $env:BASE_URL
+# echo $env:TEST_EMAIL
+# echo $env:TEST_PASSWORD
