@@ -112,7 +112,7 @@ curl http://localhost:3000/swagger.json -o swagger.json
 
 | Section | What to grab |
 |---------|-------------|
-| 3 — Setup | `snippets/setup-commands.sh` |
+| 3 — Setup | `snippets/ssh-github-setup.sh`, `prompts/section-03-setup.md`, `snippets/setup-commands.sh` |
 | 4 — Meet the API | `snippets/run-techshop-api.sh`, `prompts/section-04-map-spec.md` |
 | 5 — Postman | `snippets/mcp-setup-instructions.md`, `prompts/section-05-postman.md`, `snippets/newman-commands.sh` |
 | 6 — Bruno | `prompts/section-06-bruno.md`, `snippets/bruno-commands.sh` |
