@@ -102,8 +102,11 @@ create and manage Postman collections directly.
 
 5. Tell me to fully restart Cursor/my IDE for the MCP server to activate
 
-6. After I confirm I have restarted, verify the MCP is working by listing
-   the available Postman MCP tools
+6. After I confirm I have restarted, tell me to verify in two ways:
+   - Open Cursor Settings → Features → MCP and confirm the Postman server
+     shows a green status indicator
+   - In this chat, type: what MCP tools do you have available?
+     and confirm the Postman tools appear in the response
 ```
 
 ---
