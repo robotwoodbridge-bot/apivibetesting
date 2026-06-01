@@ -17,6 +17,15 @@
 Make sure `swagger.json` and `test-ideas.md` are in your project folder and environment variables are set up (see `snippets/env-setup.md`).
 
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 Read two files:
 - swagger.json — the full API spec with all endpoints, schemas, required
   fields, authentication requirements, and documented response codes
@@ -56,6 +65,15 @@ Requirements:
 *Used in: Section 8, Clip 3 — "Running Robot Framework and Reading the Report"*
 
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 Modify techshop.robot so that BASE_URL can be overridden from the
 command line using --variable BASE_URL:http://staging.techshop.com
 without changing the file itself.
@@ -67,6 +85,15 @@ without changing the file itself.
 *Used in: Section 8, Clip 4 — "When Robot Framework Fits and When It Does Not"*
 
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 Refactor techshop.robot to move the Get Auth Token keyword and the
 session setup/teardown into a separate resource file called
 techshop_keywords.robot. Import it in techshop.robot with:
@@ -80,6 +107,15 @@ Keep the Test Cases section in techshop.robot unchanged.
 *Used in: Section 8, Clip 2 — "Cursor Generates the Test Suite"*
 
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 Read swagger.json and test-ideas.md, then compare both against the
 test cases in techshop.robot.
 
@@ -92,23 +128,35 @@ that are not yet covered by a test case, and generate the missing ones.
 ## Prompt 5: Run Robot Framework Suite
 *Used in: Section 8, Clip 3 — "Running Robot Framework and Reading the Report"*
 
-Make sure the TechShop API is running on port 3000 and the virtual environment is active.
-
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 Help me run the Robot Framework test suite and review the results.
 Run each step in the terminal and wait for my confirmation before continuing.
 
-1. Run the full test suite and save reports to a robot-results folder:
+1. Confirm the virtual environment is active (should see (venv) in the prompt).
+   If not, activate it:
+   - Mac/Linux: source venv/bin/activate
+   - Windows: venv\Scripts\activate
+
+2. Run the full test suite and save reports to a robot-results folder:
    robot --outputdir robot-results techshop.robot
 
-2. After the run, summarise:
+3. After the run, summarise:
    - How many tests passed
    - How many tests failed
    - The names of any failing tests
 
-3. Confirm that robot-results/report.html and robot-results/log.html
+4. Confirm that robot-results/report.html and robot-results/log.html
    were created — tell me to open report.html in my browser
 
-4. Show me how to run a single test by name as an example:
+5. Show me how to run a single test by name as an example:
    robot --test "Login With Wrong Password" techshop.robot
 ```

@@ -17,6 +17,15 @@
 Make sure `swagger.json` and `test-ideas.md` are in your project folder and environment variables are set up (see `snippets/env-setup.md`).
 
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 Read two files:
 - swagger.json — the full API spec with all endpoints, schemas, required
   fields, authentication requirements, and documented response codes
@@ -56,6 +65,15 @@ Requirements:
 *Used in: Section 7, Clip 4 — "Fixtures, Parametrize, and How Cursor Structures the Code"*
 
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 Read swagger.json and look at the minimum/maximum constraints defined
 in the request schemas (e.g. quantity minimum: 1).
 
@@ -83,6 +101,15 @@ This ensures every pytest run automatically generates an HTML report.
 *Used in: Section 7, Clip 4 — "Fixtures, Parametrize, and How Cursor Structures the Code"*
 
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 Read swagger.json and test-ideas.md, then compare both against the
 test functions in test_techshop.py.
 
@@ -95,9 +122,16 @@ that are not yet covered by a test function, and generate the missing ones.
 ## Prompt 5: Run pytest and Capture Output
 *Used in: Section 7, Clip 3 — "Running pytest and Reading the Output"*
 
-Make sure the virtual environment is active and the TechShop API is running on port 3000.
-
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 Help me run the pytest test suite and review the results.
 Run each step in the terminal and wait for my confirmation before continuing.
 

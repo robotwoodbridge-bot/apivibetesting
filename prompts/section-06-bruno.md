@@ -16,6 +16,15 @@
 Use this prompt with your project folder open in Cursor. Make sure `swagger.json` and `test-ideas.md` are present.
 
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 Read two files:
 - swagger.json — the full API spec with all endpoints, schemas, required
   fields, authentication requirements, and documented response codes
@@ -58,9 +67,19 @@ get-product-not-found.bru.
 *Used in: Section 6, Clip 3 — "Running Bruno Tests and Reading Results"*
 
 ```
-Read swagger.json and check if there are any endpoints or documented
-error responses that do not yet have a corresponding .bru file in the
-techshop-bruno folder. Generate the missing .bru files.
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
+Read swagger.json and test-ideas.md, then check if there are any scenarios
+from test-ideas.md or endpoints from swagger.json that do not yet have a
+corresponding .bru file in the techshop-bruno folder.
+Generate the missing .bru files.
 ```
 
 ---
@@ -69,6 +88,15 @@ techshop-bruno folder. Generate the missing .bru files.
 *Used in: Section 6, Clip 3 — "Running Bruno Tests and Reading Results"*
 
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 The file [filename].bru has a failing assertion. Read swagger.json to check
 what status code and response shape the spec defines for this scenario,
 then rewrite the test block in the .bru file to match the spec exactly.
@@ -80,6 +108,15 @@ then rewrite the test block in the .bru file to match the spec exactly.
 *Used in: Section 6, Clip 4 — "Bruno CLI"*
 
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 Help me install the Bruno CLI and run the test collection from the terminal.
 Run each step and wait for my confirmation before continuing.
 

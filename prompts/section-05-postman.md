@@ -18,6 +18,16 @@ Use this prompt after configuring the Postman MCP server (Prompt 4 below).
 Make sure `swagger.json` and `test-ideas.md` are in your project folder.
 
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get {"status":"ok"...} — the server is up, continue.
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 Use the Postman MCP to create a new collection in my Postman workspace
 called "TechShop API Tests".
 
@@ -47,9 +57,16 @@ Based on these files:
 ## Prompt 2: Export Collection for Newman
 *Used in: Section 5, Clip 5 — "Newman CLI"*
 
-After Cursor creates the collection via MCP, export it for CI use:
-
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 Export the TechShop API Tests collection from Postman as
 techshop.postman_collection.json and save it to the project root.
 ```
@@ -59,9 +76,16 @@ techshop.postman_collection.json and save it to the project root.
 ## Prompt 3: Fix a Failing Test
 *Used in: Section 5, Clip 4 — "Running the Collection and Reading Results"*
 
-If a generated assertion does not match what the spec says:
-
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 The test for [endpoint] is failing with status [actual] but asserting [expected].
 Read swagger.json and check what response code the spec defines for this scenario.
 Update the pm.test assertion to match the spec.
@@ -123,6 +147,15 @@ for it and do not echo it.
 Make sure `techshop.postman_collection.json` is in the project root before running.
 
 ```
+First, check if the TechShop API is running on localhost:3000:
+  curl -s http://localhost:3000/health
+If you get a connection error — start it:
+  cd techshop-api/broken-app && npm start &
+Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+If it still fails, stop and tell me.
+
+Once the server is confirmed running:
+
 Help me install Newman and run the Postman collection from the terminal.
 Run each step and wait for my confirmation before continuing.
 
