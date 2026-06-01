@@ -3,12 +3,12 @@
 ## Course reference
 | Prompt | Used in clip |
 |--------|-------------|
-| Prompt 1 — SSH Setup and Clone | **Section 3, Clip 1** — Fork and Clone the Course Repo |
+| Prompt 1 — SSH Setup and Clone | **Section 3, Clip 2** — Fork and Clone the Course Repo |
 
 ---
 
 ## Prompt 1: SSH Setup and Clone
-*Used in: Section 3, Clip 1 — "Fork and Clone the Course Repo"*
+*Used in: Section 3, Clip 2 — "Fork and Clone the Course Repo"*
 
 Open Cursor with any empty folder. Open the terminal inside Cursor (Ctrl+` on Windows/Linux, Cmd+` on Mac) and paste this prompt into the Cursor chat:
 
