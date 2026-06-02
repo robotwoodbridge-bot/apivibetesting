@@ -12,7 +12,7 @@
 ---
 
 ## Prompt 1: Generate the Full Test Suite
-*Used in: Section 7, Clip 2 — "Your AI IDE Writes the Test Suite"*
+*Used in: Section 7, Clip 2 — "Antigravity IDE Writes the Test Suite"*
 
 Make sure `swagger.json` and `test-ideas.md` are in your project folder and environment variables are set up (see `snippets/env-setup.md`).
 
@@ -62,7 +62,7 @@ Requirements:
 ---
 
 ## Prompt 2: Add Parametrize for Boundary Values
-*Used in: Section 7, Clip 4 — "Fixtures, Parametrize, and How Your AI IDE Structures the Code"*
+*Used in: Section 7, Clip 4 — "Fixtures, Parametrize, and How Antigravity IDE Structures the Code"*
 
 ```
 First, check if the TechShop API is running on localhost:3000:
@@ -106,7 +106,7 @@ to match the spec exactly.
 ---
 
 ## Prompt 4: Check Coverage Against the Spec
-*Used in: Section 7, Clip 4 — "Fixtures, Parametrize, and How Your AI IDE Structures the Code"*
+*Used in: Section 7, Clip 4 — "Fixtures, Parametrize, and How Antigravity IDE Structures the Code"*
 
 ```
 First, check if the TechShop API is running on localhost:3000:

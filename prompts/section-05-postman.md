@@ -3,7 +3,7 @@
 ## Course reference
 | Prompt | Used in clip |
 |--------|-------------|
-| Prompt 1 — Create Postman Collection via MCP | **Section 5, Clip 3** — Your AI IDE Creates the Collection via MCP |
+| Prompt 1 — Create Postman Collection via MCP | **Section 5, Clip 3** — Cursor Creates the Collection via MCP |
 | Prompt 2 — Export Collection for Newman | **Section 5, Clip 5** — Newman CLI |
 | Prompt 3 — Fix a Failing Test | **Section 5, Clip 4** — Running the Collection and Reading Results |
 | Prompt 4 — Set Up Postman MCP Config | **Section 5, Clip 2** — Setting Up the Postman MCP Server |
@@ -12,7 +12,7 @@
 ---
 
 ## Prompt 1: Create Postman Collection via MCP
-*Used in: Section 5, Clip 3 — "Your AI IDE Creates the Collection via MCP"*
+*Used in: Section 5, Clip 3 — "Cursor Creates the Collection via MCP"*
 
 Use this prompt after configuring the Postman MCP server (Prompt 4 below).
 Make sure `swagger.json` and `test-ideas.md` are in your project folder.
@@ -95,7 +95,7 @@ Update the pm.test assertion to match the spec.
 *Used in: Section 5, Clip 2 — "Setting Up the Postman MCP Server"*
 
 The `POSTMAN_API_KEY` environment variable was already set in Section 3.
-Paste this prompt into your AI IDE chat — do not type or paste the key itself.
+Paste this prompt into the Cursor chat — do not type or paste the key itself.
 
 ```
 Help me configure the Postman MCP server. The API key is already stored

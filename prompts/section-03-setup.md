@@ -12,7 +12,7 @@
 ## Prompt 1: SSH Setup and Clone
 *Used in: Section 3, Clip 2 — "Fork and Clone the Course Repo"*
 
-Open your AI IDE with any empty folder. Open the terminal (Ctrl+` on Windows/Linux, Cmd+` on Mac) and paste this prompt into the chat:
+Open Cursor with any empty folder. Open the terminal (Ctrl+` on Windows/Linux, Cmd+` on Mac) and paste this prompt into the Cursor chat:
 
 ```
 I have already forked the course repo on GitHub. Now I need to set up SSH
@@ -40,7 +40,7 @@ The full command reference is also available at `snippets/ssh-github-setup.sh` i
 ## Prompt 2: Python + pytest Setup
 *Used in: Section 3, Clip 4 — "Install Python + pytest + requests"*
 
-Open the terminal in your AI IDE (Ctrl+` on Windows/Linux, Cmd+` on Mac) and paste this prompt into the chat:
+Open the Cursor terminal (Ctrl+` on Windows/Linux, Cmd+` on Mac) and paste this prompt into the Cursor chat:
 
 ```
 Help me set up Python and the pytest testing environment for this project.
@@ -76,7 +76,7 @@ Run each step one at a time and wait for my confirmation before continuing.
 ## Prompt 3: Robot Framework Setup
 *Used in: Section 3, Clip 5 — "Install Robot Framework + RequestsLibrary"*
 
-Make sure your virtual environment is still active (you should see `(venv)` in your terminal prompt) then paste this prompt into your AI IDE chat:
+Make sure your virtual environment is still active (you should see `(venv)` in your terminal prompt) then paste this prompt into the Cursor chat:
 
 ```
 Help me install Robot Framework and its HTTP testing library.

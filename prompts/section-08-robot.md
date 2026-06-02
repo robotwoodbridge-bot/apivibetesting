@@ -3,16 +3,16 @@
 ## Course reference
 | Prompt | Used in clip |
 |--------|-------------|
-| Prompt 1 — Generate the Full Test Suite | **Section 8, Clip 2** — Your AI IDE Generates the Test Suite |
+| Prompt 1 — Generate the Full Test Suite | **Section 8, Clip 2** — Antigravity IDE Generates the Test Suite |
 | Prompt 2 — Override BASE_URL from Command Line | **Section 8, Clip 3** — Running Robot Framework and Reading the Report |
 | Prompt 3 — Extract Keywords to a Resource File | **Section 8, Clip 4** — When Robot Framework Fits and When It Does Not |
-| Prompt 4 — Check Coverage Against the Spec | **Section 8, Clip 2** — Your AI IDE Generates the Test Suite |
+| Prompt 4 — Check Coverage Against the Spec | **Section 8, Clip 2** — Antigravity IDE Generates the Test Suite |
 | Prompt 5 — Run Robot Framework Suite | **Section 8, Clip 3** — Running Robot Framework and Reading the Report |
 
 ---
 
 ## Prompt 1: Generate the Full Robot Framework Test Suite
-*Used in: Section 8, Clip 2 — "Your AI IDE Generates the Test Suite"*
+*Used in: Section 8, Clip 2 — "Antigravity IDE Generates the Test Suite"*
 
 Make sure `swagger.json` and `test-ideas.md` are in your project folder and environment variables are set up (see `snippets/env-setup.md`).
 
@@ -104,7 +104,7 @@ Keep the Test Cases section in techshop.robot unchanged.
 ---
 
 ## Prompt 4: Check Coverage Against the Spec
-*Used in: Section 8, Clip 2 — "Your AI IDE Generates the Test Suite"*
+*Used in: Section 8, Clip 2 — "Antigravity IDE Generates the Test Suite"*
 
 ```
 First, check if the TechShop API is running on localhost:3000:

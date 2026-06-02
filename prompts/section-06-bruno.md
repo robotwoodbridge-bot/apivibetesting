@@ -3,7 +3,7 @@
 ## Course reference
 | Prompt | Used in clip |
 |--------|-------------|
-| Prompt 1 — Generate Bruno Collection | **Section 6, Clip 2** — Your AI IDE Writes .bru Files Directly |
+| Prompt 1 — Generate Bruno Collection | **Section 6, Clip 2** — Cursor Writes .bru Files Directly |
 | Prompt 2 — Add a Missing Test | **Section 6, Clip 3** — Running Bruno Tests and Reading Results |
 | Prompt 3 — Fix a .bru Assertion | **Section 6, Clip 3** — Running Bruno Tests and Reading Results |
 | Prompt 4 — Install Bruno CLI and Run Collection | **Section 6, Clip 4** — Bruno CLI |
@@ -11,9 +11,9 @@
 ---
 
 ## Prompt 1: Generate Bruno Collection
-*Used in: Section 6, Clip 2 — "Your AI IDE Writes .bru Files Directly"*
+*Used in: Section 6, Clip 2 — "Cursor Writes .bru Files Directly"*
 
-Use this prompt with your project folder open in your AI IDE. Make sure `swagger.json` and `test-ideas.md` are present.
+Use this prompt with your project folder open in Cursor. Make sure `swagger.json` and `test-ideas.md` are present.
 
 ```
 First, check if the TechShop API is running on localhost:3000:

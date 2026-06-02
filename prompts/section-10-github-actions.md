@@ -3,16 +3,16 @@
 ## Course reference
 | Prompt | Used in clip |
 |--------|-------------|
-| Prompt 1 — Generate the Full CI Workflow | **Section 10, Clip 2** — Your AI IDE Writes the .yml File |
+| Prompt 1 — Generate the Full CI Workflow | **Section 10, Clip 2** — Antigravity IDE Writes the .yml File |
 | Prompt 2 — Add Branch Protection Instructions | **Section 10, Clip 4** — Failing the Build and Publishing Reports |
 | Prompt 3 — Switch to Fixed App in CI | **Section 10, Clip 3** — Running All Four Suites in CI |
-| Prompt 4 — Commit and Push Workflow to GitHub | **Section 10, Clip 2** — Your AI IDE Writes the .yml File |
+| Prompt 4 — Commit and Push Workflow to GitHub | **Section 10, Clip 2** — Antigravity IDE Writes the .yml File |
 | Prompt 5 — Add GitHub Secrets for Credentials | **Section 10, Clip 3** — Running All Four Suites in CI |
 
 ---
 
 ## Prompt 1: Generate the Full CI Workflow
-*Used in: Section 10, Clip 2 — "Your AI IDE Writes the .yml File"*
+*Used in: Section 10, Clip 2 — "Antigravity IDE Writes the .yml File"*
 
 ```
 Create a GitHub Actions workflow file at .github/workflows/api-tests.yml.
@@ -143,7 +143,7 @@ All other steps stay the same.
 ---
 
 ## Prompt 4: Commit and Push Workflow to GitHub
-*Used in: Section 10, Clip 2 — "Your AI IDE Writes the .yml File"*
+*Used in: Section 10, Clip 2 — "Antigravity IDE Writes the .yml File"*
 
 ```
 Help me commit the new GitHub Actions workflow file and push it to GitHub.
