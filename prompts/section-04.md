@@ -5,14 +5,14 @@
 |--------|-------------|
 | Prompt 1 — Start the TechShop API | **Section 4, Clip 1** — Running the TechShop API Locally |
 | Prompt 2 — Download the OpenAPI Spec | **Section 4, Clip 2** — Reading the OpenAPI Spec |
-| Prompt 3 — Map Endpoints to Test Ideas | **Section 4, Clip 3** — Using Cursor to Map the Spec to Test Ideas |
+| Prompt 3 — Map Endpoints to Test Ideas | **Section 4, Clip 3** — Using Your AI IDE to Map the Spec to Test Ideas |
 
 ---
 
 ## Prompt 1: Start the TechShop API
 *Used in: Section 4, Clip 1 — "Running the TechShop API Locally"*
 
-Open the Cursor terminal (Ctrl+` on Windows/Linux, Cmd+` on Mac) and paste this prompt into the Cursor chat:
+Open the terminal in your AI IDE (Ctrl+` on Windows/Linux, Cmd+` on Mac) and paste this prompt into the chat:
 
 ```
 Help me start the TechShop API locally. Run each step in the terminal
@@ -61,7 +61,7 @@ It should show a file of roughly 5-10 KB.
 ---
 
 ## Prompt 3: Map Endpoints to Test Ideas
-*Used in: Section 4, Clip 3 — "Using Cursor to Map the Spec to Test Ideas"*
+*Used in: Section 4, Clip 3 — "Using Your AI IDE to Map the Spec to Test Ideas"*
 
 Use this prompt after `swagger.json` has been downloaded to the project root.
 
