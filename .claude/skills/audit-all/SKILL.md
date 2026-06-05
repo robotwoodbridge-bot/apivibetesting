@@ -61,3 +61,11 @@ After listing all violations, produce a prioritised summary table:
 |----------|-----------------|----------|
 
 Priority: **High** = secrets, non-independent tests, missing assertions that hide real bugs. **Medium** = DRY, naming, structure. **Low** = style, cosmetic.
+
+After reviewing the findings, use the appropriate skills to apply fixes:
+- `/refactor-pytest` — fix the pytest suite
+- `/refactor-postman` — fix the Postman collection
+- `/refactor-bruno` — fix the Bruno collection
+- `/refactor-robot` — fix the Robot Framework suite
+- `/refactor-ci-pipeline` — update GitHub Actions YAML after any structural changes
+- `/refactor-tests` — run all of the above in one go
