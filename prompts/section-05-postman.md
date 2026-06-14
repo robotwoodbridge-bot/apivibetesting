@@ -118,7 +118,7 @@ for it and do not echo it.
      "mcpServers": {
        "postman": {
          "command": "npx",
-         "args": ["-y", "@postman/mcp-server"],
+         "args": ["-y", "@postman/postman-mcp-server"],
          "env": {
            "POSTMAN_API_KEY": "${POSTMAN_API_KEY}"
          }
