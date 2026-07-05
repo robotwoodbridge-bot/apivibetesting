@@ -1,0 +1,21 @@
+meta {
+  name: get-orders-invalid-token
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/orders
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer invalid.token.value
+}
+
+tests {
+  test("Status code is 401 (invalid token)", function() {
+    expect(res.getStatus()).to.equal(401);
+  });
+}

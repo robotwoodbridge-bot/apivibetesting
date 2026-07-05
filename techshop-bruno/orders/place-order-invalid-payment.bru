@@ -1,0 +1,41 @@
+meta {
+  name: place-order-invalid-payment
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/orders
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{authToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "items": [
+      { "productId": 1, "quantity": 2 }
+    ],
+    "shipping": {
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "email": "jane@example.com",
+      "phone": "0412345678"
+    },
+    "payment": {
+      "cardNumber": "1234",
+      "expiryDate": "12/28",
+      "cvv": "123"
+    }
+  }
+}
+
+tests {
+  test("Status code is 400 (invalid card number)", function() {
+    expect(res.getStatus()).to.equal(400);
+  });
+}

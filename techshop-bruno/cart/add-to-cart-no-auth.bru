@@ -1,0 +1,28 @@
+meta {
+  name: add-to-cart-no-auth
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{baseUrl}}/cart
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "productId": 1,
+    "quantity": 2
+  }
+}
+
+tests {
+  test("Status code is 401 (no auth header)", function() {
+    expect(res.getStatus()).to.equal(401);
+  });
+}

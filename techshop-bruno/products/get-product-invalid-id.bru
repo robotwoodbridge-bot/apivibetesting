@@ -1,0 +1,17 @@
+meta {
+  name: get-product-invalid-id
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/products/abc
+  body: none
+  auth: none
+}
+
+tests {
+  test("Status code is 400 or 404, not a server error", function() {
+    expect(res.getStatus()).to.be.oneOf([400, 404]);
+  });
+}

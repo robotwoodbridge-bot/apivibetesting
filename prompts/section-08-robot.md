@@ -17,11 +17,11 @@
 Make sure `swagger.json` and `test-ideas.md` are in your project folder and environment variables are set up (see `snippets/env-setup.md`).
 
 ```
-First, check if the TechShop API is running on localhost:3000:
-  curl -s http://localhost:3000/health
+First, check if the TechShop API is running on localhost:3001:
+  curl -s http://localhost:3001/health
 If you get a connection error — start it:
   cd techshop-api/broken-app && npm start &
-Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+Wait 3 seconds, then verify: curl -s http://localhost:3001/health
 If it still fails, stop and tell me.
 
 Once the server is confirmed running:
@@ -65,11 +65,11 @@ Requirements:
 *Used in: Section 8, Clip 3 — "Running Robot Framework and Reading the Report"*
 
 ```
-First, check if the TechShop API is running on localhost:3000:
-  curl -s http://localhost:3000/health
+First, check if the TechShop API is running on localhost:3001:
+  curl -s http://localhost:3001/health
 If you get a connection error — start it:
   cd techshop-api/broken-app && npm start &
-Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+Wait 3 seconds, then verify: curl -s http://localhost:3001/health
 If it still fails, stop and tell me.
 
 Once the server is confirmed running:
@@ -85,11 +85,11 @@ without changing the file itself.
 *Used in: Section 8, Clip 4 — "When Robot Framework Fits and When It Does Not"*
 
 ```
-First, check if the TechShop API is running on localhost:3000:
-  curl -s http://localhost:3000/health
+First, check if the TechShop API is running on localhost:3001:
+  curl -s http://localhost:3001/health
 If you get a connection error — start it:
   cd techshop-api/broken-app && npm start &
-Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+Wait 3 seconds, then verify: curl -s http://localhost:3001/health
 If it still fails, stop and tell me.
 
 Once the server is confirmed running:
@@ -107,11 +107,11 @@ Keep the Test Cases section in techshop.robot unchanged.
 *Used in: Section 8, Clip 2 — "Antigravity IDE Generates the Test Suite"*
 
 ```
-First, check if the TechShop API is running on localhost:3000:
-  curl -s http://localhost:3000/health
+First, check if the TechShop API is running on localhost:3001:
+  curl -s http://localhost:3001/health
 If you get a connection error — start it:
   cd techshop-api/broken-app && npm start &
-Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+Wait 3 seconds, then verify: curl -s http://localhost:3001/health
 If it still fails, stop and tell me.
 
 Once the server is confirmed running:
@@ -129,11 +129,11 @@ that are not yet covered by a test case, and generate the missing ones.
 *Used in: Section 8, Clip 3 — "Running Robot Framework and Reading the Report"*
 
 ```
-First, check if the TechShop API is running on localhost:3000:
-  curl -s http://localhost:3000/health
+First, check if the TechShop API is running on localhost:3001:
+  curl -s http://localhost:3001/health
 If you get a connection error — start it:
   cd techshop-api/broken-app && npm start &
-Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+Wait 3 seconds, then verify: curl -s http://localhost:3001/health
 If it still fails, stop and tell me.
 
 Once the server is confirmed running:

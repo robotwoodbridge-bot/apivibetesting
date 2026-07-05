@@ -1,0 +1,17 @@
+meta {
+  name: remove-cart-item-no-auth
+  type: http
+  seq: 14
+}
+
+delete {
+  url: {{baseUrl}}/cart/1
+  body: none
+  auth: none
+}
+
+tests {
+  test("Status code is 401 (no auth header)", function() {
+    expect(res.getStatus()).to.equal(401);
+  });
+}

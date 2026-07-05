@@ -17,11 +17,11 @@
 Make sure `swagger.json` and `test-ideas.md` are in your project folder and environment variables are set up (see `snippets/env-setup.md`).
 
 ```
-First, check if the TechShop API is running on localhost:3000:
-  curl -s http://localhost:3000/health
+First, check if the TechShop API is running on localhost:3001:
+  curl -s http://localhost:3001/health
 If you get a connection error — start it:
   cd techshop-api/broken-app && npm start &
-Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+Wait 3 seconds, then verify: curl -s http://localhost:3001/health
 If it still fails, stop and tell me.
 
 Once the server is confirmed running:
@@ -39,7 +39,7 @@ Generate a pytest test suite in a file called test_techshop.py
 using the requests library.
 
 Requirements:
-- Set BASE_URL = os.getenv("BASE_URL", "http://localhost:3000")
+- Set BASE_URL = os.getenv("BASE_URL", "http://localhost:3001")
   (variables come from the system environment — no .env file, no dotenv import)
 - Write a pytest fixture called auth_token that:
     - reads credentials from environment variables:
@@ -65,11 +65,11 @@ Requirements:
 *Used in: Section 7, Clip 4 — "Fixtures, Parametrize, and How Antigravity IDE Structures the Code"*
 
 ```
-First, check if the TechShop API is running on localhost:3000:
-  curl -s http://localhost:3000/health
+First, check if the TechShop API is running on localhost:3001:
+  curl -s http://localhost:3001/health
 If you get a connection error — start it:
   cd techshop-api/broken-app && npm start &
-Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+Wait 3 seconds, then verify: curl -s http://localhost:3001/health
 If it still fails, stop and tell me.
 
 Once the server is confirmed running:
@@ -88,11 +88,11 @@ multiple boundary values (e.g. 0, -1, -100 for a field with minimum 1).
 *Used in: Section 7, Clip 3 — "Running pytest and Reading the Output"*
 
 ```
-First, check if the TechShop API is running on localhost:3000:
-  curl -s http://localhost:3000/health
+First, check if the TechShop API is running on localhost:3001:
+  curl -s http://localhost:3001/health
 If you get a connection error — start it:
   cd techshop-api/broken-app && npm start &
-Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+Wait 3 seconds, then verify: curl -s http://localhost:3001/health
 If it still fails, stop and tell me.
 
 Once the server is confirmed running:
@@ -109,11 +109,11 @@ to match the spec exactly.
 *Used in: Section 7, Clip 4 — "Fixtures, Parametrize, and How Antigravity IDE Structures the Code"*
 
 ```
-First, check if the TechShop API is running on localhost:3000:
-  curl -s http://localhost:3000/health
+First, check if the TechShop API is running on localhost:3001:
+  curl -s http://localhost:3001/health
 If you get a connection error — start it:
   cd techshop-api/broken-app && npm start &
-Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+Wait 3 seconds, then verify: curl -s http://localhost:3001/health
 If it still fails, stop and tell me.
 
 Once the server is confirmed running:
@@ -131,11 +131,11 @@ that are not yet covered by a test function, and generate the missing ones.
 *Used in: Section 7, Clip 3 — "Running pytest and Reading the Output"*
 
 ```
-First, check if the TechShop API is running on localhost:3000:
-  curl -s http://localhost:3000/health
+First, check if the TechShop API is running on localhost:3001:
+  curl -s http://localhost:3001/health
 If you get a connection error — start it:
   cd techshop-api/broken-app && npm start &
-Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+Wait 3 seconds, then verify: curl -s http://localhost:3001/health
 If it still fails, stop and tell me.
 
 Once the server is confirmed running:

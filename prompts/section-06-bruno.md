@@ -16,11 +16,11 @@
 Use this prompt with your project folder open in Cursor. Make sure `swagger.json` and `test-ideas.md` are present.
 
 ```
-First, check if the TechShop API is running on localhost:3000:
-  curl -s http://localhost:3000/health
+First, check if the TechShop API is running on localhost:3001:
+  curl -s http://localhost:3001/health
 If you get a connection error — start it:
   cd techshop-api/broken-app && npm start &
-Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+Wait 3 seconds, then verify: curl -s http://localhost:3001/health
 If it still fails, stop and tell me.
 
 Once the server is confirmed running:
@@ -45,7 +45,7 @@ Create the folder structure:
     environments/
 
 In the environments folder, create a file called local.bru that sets:
-  baseUrl = http://localhost:3000
+  baseUrl = http://localhost:3001
   authToken = (empty — will be populated after login)
 
 For each endpoint, generate one .bru file per test scenario listed in
@@ -67,11 +67,11 @@ get-product-not-found.bru.
 *Used in: Section 6, Clip 3 — "Running Bruno Tests and Reading Results"*
 
 ```
-First, check if the TechShop API is running on localhost:3000:
-  curl -s http://localhost:3000/health
+First, check if the TechShop API is running on localhost:3001:
+  curl -s http://localhost:3001/health
 If you get a connection error — start it:
   cd techshop-api/broken-app && npm start &
-Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+Wait 3 seconds, then verify: curl -s http://localhost:3001/health
 If it still fails, stop and tell me.
 
 Once the server is confirmed running:
@@ -88,11 +88,11 @@ Generate the missing .bru files.
 *Used in: Section 6, Clip 3 — "Running Bruno Tests and Reading Results"*
 
 ```
-First, check if the TechShop API is running on localhost:3000:
-  curl -s http://localhost:3000/health
+First, check if the TechShop API is running on localhost:3001:
+  curl -s http://localhost:3001/health
 If you get a connection error — start it:
   cd techshop-api/broken-app && npm start &
-Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+Wait 3 seconds, then verify: curl -s http://localhost:3001/health
 If it still fails, stop and tell me.
 
 Once the server is confirmed running:
@@ -108,11 +108,11 @@ then rewrite the test block in the .bru file to match the spec exactly.
 *Used in: Section 6, Clip 4 — "Bruno CLI"*
 
 ```
-First, check if the TechShop API is running on localhost:3000:
-  curl -s http://localhost:3000/health
+First, check if the TechShop API is running on localhost:3001:
+  curl -s http://localhost:3001/health
 If you get a connection error — start it:
   cd techshop-api/broken-app && npm start &
-Wait 3 seconds, then verify: curl -s http://localhost:3000/health
+Wait 3 seconds, then verify: curl -s http://localhost:3001/health
 If it still fails, stop and tell me.
 
 Once the server is confirmed running:

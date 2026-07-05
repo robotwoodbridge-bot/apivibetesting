@@ -1,0 +1,26 @@
+meta {
+  name: get-products-injection-category
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/products?category=<script>alert(1)</script>
+  body: none
+  auth: none
+}
+
+params:query {
+  category: <script>alert(1)</script>
+}
+
+tests {
+  test("Status code is 200, no server error", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+
+  test("Response is empty array with no reflected script", function() {
+    expect(res.getBody()).to.be.an("array").that.is.empty;
+    expect(JSON.stringify(res.getBody())).to.not.include("<script>");
+  });
+}

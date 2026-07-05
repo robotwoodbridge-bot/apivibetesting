@@ -1,0 +1,27 @@
+meta {
+  name: update-cart-item-no-auth
+  type: http
+  seq: 11
+}
+
+put {
+  url: {{baseUrl}}/cart/1
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "quantity": 2
+  }
+}
+
+tests {
+  test("Status code is 401 (no auth header)", function() {
+    expect(res.getStatus()).to.equal(401);
+  });
+}

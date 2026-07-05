@@ -1,0 +1,17 @@
+meta {
+  name: get-cart-no-auth
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/cart
+  body: none
+  auth: none
+}
+
+tests {
+  test("Status code is 401 (no auth header)", function() {
+    expect(res.getStatus()).to.equal(401);
+  });
+}

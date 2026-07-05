@@ -3,7 +3,7 @@
     "postman": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@postman/mcp-server"],
+      "args": ["-y", "@postman/postman-mcp-server"],
       "env": {
         "POSTMAN_API_KEY": "YOUR_KEY_HERE"
       }

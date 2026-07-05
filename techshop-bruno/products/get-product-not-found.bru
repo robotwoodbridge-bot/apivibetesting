@@ -1,0 +1,17 @@
+meta {
+  name: get-product-not-found
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/products/99999
+  body: none
+  auth: none
+}
+
+tests {
+  test("Status code is 404", function() {
+    expect(res.getStatus()).to.equal(404);
+  });
+}

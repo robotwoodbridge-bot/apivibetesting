@@ -1,0 +1,29 @@
+meta {
+  name: add-to-cart-nonexistent-product
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/cart
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{authToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "productId": 99999,
+    "quantity": 1
+  }
+}
+
+tests {
+  test("Status code is 404 (product not found)", function() {
+    expect(res.getStatus()).to.equal(404);
+  });
+}

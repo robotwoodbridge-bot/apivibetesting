@@ -1,0 +1,17 @@
+meta {
+  name: get-orders-no-auth
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/orders
+  body: none
+  auth: none
+}
+
+tests {
+  test("Status code is 401 (no auth header)", function() {
+    expect(res.getStatus()).to.equal(401);
+  });
+}

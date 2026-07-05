@@ -1,0 +1,28 @@
+meta {
+  name: login-unknown-email
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "nonexistent@techshop.com",
+    "password": "password123"
+  }
+}
+
+tests {
+  test("Status code is 401 (unknown email)", function() {
+    expect(res.getStatus()).to.equal(401);
+  });
+}

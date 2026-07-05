@@ -47,9 +47,9 @@ npm start
 
 | URL | What it is |
 |-----|-----------|
-| http://localhost:3000/health | Health check |
-| http://localhost:3000/docs | Swagger UI — browse and call endpoints |
-| http://localhost:3000/swagger.json | Raw OpenAPI spec — feed this to Cursor |
+| http://localhost:3001/health | Health check |
+| http://localhost:3001/docs | Swagger UI — browse and call endpoints |
+| http://localhost:3001/swagger.json | Raw OpenAPI spec — feed this to Cursor |
 
 **Test credentials:** `demo@techshop.com` / `password123`
 
@@ -103,7 +103,7 @@ The prompts are designed to be used with `swagger.json` in your project folder.
 Copy it from here:
 
 ```bash
-curl http://localhost:3000/swagger.json -o swagger.json
+curl http://localhost:3001/swagger.json -o swagger.json
 ```
 
 ---

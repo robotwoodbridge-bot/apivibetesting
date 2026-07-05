@@ -1,0 +1,28 @@
+meta {
+  name: update-cart-item-not-found
+  type: http
+  seq: 10
+}
+
+put {
+  url: {{baseUrl}}/cart/99999
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{authToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "quantity": 2
+  }
+}
+
+tests {
+  test("Status code is 404 (cart item not found)", function() {
+    expect(res.getStatus()).to.equal(404);
+  });
+}

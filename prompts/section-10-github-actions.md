@@ -41,14 +41,14 @@ Steps in order:
    (background process, continues to next step)
 
 5. Wait for the server to be ready
-   run: sleep 5 then curl --retry 5 --retry-delay 2 http://localhost:3000/health
+   run: sleep 5 then curl --retry 5 --retry-delay 2 http://localhost:3001/health
 
 6. Install Newman and the HTML reporter
    run: npm install -g newman newman-reporter-html
 
 7. Run Postman collection with Newman
    run: newman run techshop.postman_collection.json
-        --env-var base_url=http://localhost:3000
+        --env-var base_url=http://localhost:3001
         --reporters cli,html
         --reporter-html-export newman-report.html
    continue-on-error: true
@@ -71,7 +71,7 @@ Steps in order:
 12. Run pytest
     run: pytest test_techshop.py -v --html=pytest-report.html --self-contained-html
     env:
-      BASE_URL: http://localhost:3000
+      BASE_URL: http://localhost:3001
       TEST_EMAIL: ${{ secrets.TEST_EMAIL }}
       TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
     continue-on-error: true
@@ -81,7 +81,7 @@ Steps in order:
     run: pip install robotframework robotframework-requests
 
 14. Run Robot Framework
-    run: robot --variable BASE_URL:http://localhost:3000
+    run: robot --variable BASE_URL:http://localhost:3001
               --outputdir robot-results techshop.robot
     env:
       TEST_EMAIL: ${{ secrets.TEST_EMAIL }}
@@ -262,12 +262,12 @@ Run each step in the terminal and wait for my confirmation before continuing.
 2. Start the fixed app:
    cd techshop-api/fixed-app && npm install && npm start &
    Wait 3 seconds, then verify it is up:
-   curl -s http://localhost:3000/health
+   curl -s http://localhost:3001/health
    The response should show "environment":"fixed" — if not, stop and tell me.
 
 3. Run Newman:
    newman run techshop.postman_collection.json \
-     --env-var base_url=http://localhost:3000 \
+     --env-var base_url=http://localhost:3001 \
      --reporters cli
    Report how many tests passed and failed.
 
@@ -280,7 +280,7 @@ Run each step in the terminal and wait for my confirmation before continuing.
    Report how many tests passed and failed.
 
 6. Run Robot Framework:
-   robot --variable BASE_URL:http://localhost:3000 techshop.robot
+   robot --variable BASE_URL:http://localhost:3001 techshop.robot
    Report how many tests passed and failed.
 
 7. Give me a final summary table:
@@ -315,9 +315,9 @@ For each failure:
 
 Once all fixes are applied, rerun the full test suite:
    pytest test_techshop.py -v
-   newman run techshop.postman_collection.json --env-var base_url=http://localhost:3000
+   newman run techshop.postman_collection.json --env-var base_url=http://localhost:3001
    bru run techshop-bruno/ --env local
-   robot --variable BASE_URL:http://localhost:3000 techshop.robot
+   robot --variable BASE_URL:http://localhost:3001 techshop.robot
 
 Report the final pass/fail count for each suite. Repeat until everything
 is green.

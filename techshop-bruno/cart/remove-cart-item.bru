@@ -1,0 +1,21 @@
+meta {
+  name: remove-cart-item
+  type: http
+  seq: 12
+}
+
+delete {
+  url: {{baseUrl}}/cart/1
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{authToken}}
+}
+
+tests {
+  test("Status code is 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

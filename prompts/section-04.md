@@ -27,12 +27,12 @@ and wait for my confirmation before continuing.
 3. Start the API server:
    npm start
    The terminal should print three lines:
-   - TechShop API (broken) running on http://localhost:3000
-   - Swagger UI: http://localhost:3000/docs
-   - OpenAPI spec: http://localhost:3000/swagger.json
+   - TechShop API (broken) running on http://localhost:3001
+   - Swagger UI: http://localhost:3001/docs
+   - OpenAPI spec: http://localhost:3001/swagger.json
 
 4. Verify the API is running by calling the health endpoint:
-   curl http://localhost:3000/health
+   curl http://localhost:3001/health
    Expected response: {"status":"ok","version":"1.0.0","environment":"broken"}
 
 If npm is not installed, tell me to install Node.js from nodejs.org first.
@@ -43,14 +43,14 @@ If npm is not installed, tell me to install Node.js from nodejs.org first.
 ## Prompt 2: Download the OpenAPI Spec
 *Used in: Section 4, Clip 2 — "Reading the OpenAPI Spec"*
 
-Make sure the API is running on port 3000 before using this prompt.
+Make sure the API is running on port 3001 before using this prompt.
 
 ```
-The TechShop API is running on http://localhost:3000.
+The TechShop API is running on http://localhost:3001.
 Run this command in the terminal to download the OpenAPI spec
 into the root of the project folder:
 
-curl http://localhost:3000/swagger.json -o swagger.json
+curl http://localhost:3001/swagger.json -o swagger.json
 
 Then confirm the file was created by running:
 ls -lh swagger.json
