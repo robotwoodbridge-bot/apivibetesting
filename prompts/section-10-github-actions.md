@@ -129,18 +129,7 @@ Steps in order:
 I have a failing GitHub Actions run. Here are the error annotations
 from the failed run:
 
-Annotations
-1 error and 4 warnings
-Wait for the server to be ready
-Process completed with exit code 7.
-Complete job
-Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
-Upload Newman report as artifact
-No files were found with the provided path: newman-report.html. No artifacts will be uploaded.
-Upload Robot Framework report as artifact
-No files were found with the provided path: robot-results/. No artifacts will be uploaded.
-Upload pytest HTML report as artifact
-No files were found with the provided path: pytest-report.html. No artifacts will be uploaded.
+[PASTE YOUR ANNOTATIONS HERE]
 
 Read the errors and fix .github/workflows/api-tests.yml so the pipeline
 runs correctly. Tell me if I also need to add any GitHub Secrets or
