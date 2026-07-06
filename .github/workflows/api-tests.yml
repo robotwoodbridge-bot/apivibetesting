@@ -23,11 +23,9 @@ jobs:
         run: npm install
         working-directory: techshop-api/broken-app
 
-      - name: Start the TechShop API in the background
-        run: node techshop-api/broken-app/server.js &
-
-      - name: Wait for the server to be ready
+      - name: Start the TechShop API and wait for it to be ready
         run: |
+          node techshop-api/broken-app/server.js &
           sleep 5
           curl --retry 5 --retry-delay 2 http://localhost:3001/health
 
