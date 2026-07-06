@@ -27,3 +27,9 @@ tests {
     expect(res.getStatus()).to.equal(201);
   });
 }
+
+script:post-response {
+  const items = res.getBody().items;
+  const addedItem = items.find((item) => item.productId === 1);
+  bru.setVar("cartItemId", addedItem.id);
+}

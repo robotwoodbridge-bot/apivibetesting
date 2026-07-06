@@ -14,7 +14,7 @@ Get Auth Headers
     RETURN    ${headers}
 
 Add Product To Cart And Get Item Id
-    [Arguments]    ${headers}    ${product_id}=1    ${quantity}=2
+    [Arguments]    ${headers}    ${product_id}=${1}    ${quantity}=${2}
     ${body}=    Create Dictionary    productId=${product_id}    quantity=${quantity}
     ${response}=    POST On Session    techshop    /cart    json=${body}    headers=${headers}    expected_status=any
     Should Be Equal As Integers    ${response.status_code}    201

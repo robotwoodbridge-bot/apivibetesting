@@ -21,13 +21,13 @@ jobs:
 
       - name: Install TechShop API dependencies
         run: npm install
-        working-directory: techshop-api/broken-app
+        working-directory: techshop-api/fixed-app
 
       - name: Start the TechShop API and wait for it to be ready
         env:
           PORT: 3001
         run: |
-          node techshop-api/broken-app/server.js &
+          node techshop-api/fixed-app/server.js &
           sleep 5
           curl --retry 5 --retry-delay 2 http://localhost:3001/health
 
@@ -49,7 +49,8 @@ jobs:
       - name: Run Bruno collection
         id: bruno
         continue-on-error: true
-        run: bru run techshop-bruno/ --env local
+        working-directory: techshop-bruno
+        run: bru run --env local
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5

@@ -1,0 +1,2465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.13.0 on darwin)" generated="2026-07-06T14:03:04.141292" rpa="false" schemaversion="5">
+<suite id="s1" name="Techshop" source="/Users/admin2/apivibetesting/techshop.robot">
+<kw name="Create Techshop Session" owner="techshop_keywords" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.221520" level="INFO">Creating Session using : alias=techshop, url=http://localhost:3001, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>techshop</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-07-06T14:03:04.221437" elapsed="0.000219"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.221026" elapsed="0.000686"/>
+</kw>
+<test id="s1-t1" name="Login With Valid Credentials Returns Token" line="47">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.222092" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.221926" elapsed="0.000179"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.228509" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '57', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.228565" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '275', 'ETag': 'W/"113-XSGV1Fy0aGWc5D3XEZeq7YmcPG0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM","user":{"id":1,"email":"demo@techshop.com","name":"Demo User"}} 
+ </msg>
+<msg time="2026-07-06T14:03:04.228626" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.222152" elapsed="0.006486"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.228967" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.228714" elapsed="0.000284"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.229239" level="INFO">Length is 200.</msg>
+<arg>${response.json()}[token]</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.229049" elapsed="0.000208"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response.json()}[user][email]</arg>
+<arg>${EMAIL}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.229301" elapsed="0.000195"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.221747" elapsed="0.007821"/>
+</test>
+<test id="s1-t2" name="Login With Missing Email Returns 400" line="54">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.229942" level="INFO">${body} = {'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>password=password123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.229855" elapsed="0.000104"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.231298" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '27', 'Content-Type': 'application/json'} 
+ body=b'{"password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.231328" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=400, reason=Bad Request 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '43', 'ETag': 'W/"2b-C6e/EBdR6LXyNK5A/isCT2gR1vI"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"Email and password are required"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.231368" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.230003" elapsed="0.001376"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.231619" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>400</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.231430" elapsed="0.000213"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.229701" elapsed="0.001984"/>
+</test>
+<test id="s1-t3" name="Login With Missing Password Returns 400" line="59">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.231942" level="INFO">${body} = {'email': 'demo@techshop.com'}</msg>
+<var>${body}</var>
+<arg>email=demo@techshop.com</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.231877" elapsed="0.000075"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.232977" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '30', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.233002" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=400, reason=Bad Request 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '43', 'ETag': 'W/"2b-C6e/EBdR6LXyNK5A/isCT2gR1vI"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"Email and password are required"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.233038" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.231991" elapsed="0.001057"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.233273" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>400</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.233095" elapsed="0.000199"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.231757" elapsed="0.001647"/>
+</test>
+<test id="s1-t4" name="Login With Wrong Password Returns 401" line="64">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.233754" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'wrongpassword'}</msg>
+<var>${body}</var>
+<arg>email=demo@techshop.com</arg>
+<arg>password=wrongpassword</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.233664" elapsed="0.000104"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.234814" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '59', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "wrongpassword"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.234838" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=401, reason=Unauthorized 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '31', 'ETag': 'W/"1f-mRYQ6Yx/raK/ssDeWseqQCiH0yM"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"Invalid credentials"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.234874" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.233816" elapsed="0.001067"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.235117" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>401</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.234930" elapsed="0.000209"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.233502" elapsed="0.001675"/>
+</test>
+<test id="s1-t5" name="Login With Unknown Email Returns 401" line="69">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.235420" level="INFO">${body} = {'email': 'nonexistent@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=nonexistent@techshop.com</arg>
+<arg>password=password123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.235356" elapsed="0.000073"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.236357" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '64', 'Content-Type': 'application/json'} 
+ body=b'{"email": "nonexistent@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.236387" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=401, reason=Unauthorized 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '31', 'ETag': 'W/"1f-mRYQ6Yx/raK/ssDeWseqQCiH0yM"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"Invalid credentials"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.236420" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.235467" elapsed="0.000963"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.236633" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>401</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.236473" elapsed="0.000179"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.235244" elapsed="0.001441"/>
+</test>
+<test id="s1-t6" name="Get All Products Returns 200 And List" line="77">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.237687" level="INFO">GET Request : url=http://localhost:3001/products 
+ path_url=/products 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.237709" level="INFO">GET Response : url=http://localhost:3001/products 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '1221', 'ETag': 'W/"4c5-epMM57BJpM95sFtCzKma67a/hzs"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body=[{"id":1,"name":"Laptop Pro 15\"","description":"High-performance laptop with 15-inch display, 16GB RAM, 512GB SSD","price":1299.99,"category":"computers","stock":10,"image":"laptop-pro.jpg","inStock":true},{"id":2,"name":"Wireless Headphones","description":"Noise-cancelling over-ear headphones with 30-hour battery life","price":89.99,"category":"audio","stock":25,"image":"headphones.jpg","inStock":true},{"id":3,"name":"USB-C Hub 7-in-1","description":"Expand your ports: HDMI, USB-A x3, SD card, microSD, USB-C PD","price":49.99,"category":"accessories","stock":50,"image":"usb-hub.jpg","inStock":true},{"id":4,"name":"Mechanical Keyboard","description":"Tenkeyless mechanical keyboard with Cherry MX Brown switches, RGB backlight","price":159.99,"category":"peripherals","stock":15,"image":"keyboard.jpg","inStock":true},{"id":5,"name":"4K Webcam","description":"Ultra HD webcam with autofocus, built-in mic, plug-and-play USB-C","price":129.99,"category":"peripherals","stock":8,"image":"webcam.jpg","inStock":true},{"id":6,"name":"Mouse Pad XL","description":"Extra-large desk mat, 900x400mm, non-slip base, stitched edges","price":29.99,"category":"accessories","stock":0,"image":"mousepad.jpg","inStock":false}] 
+ </msg>
+<msg time="2026-07-06T14:03:04.237746" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/products</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.236843" elapsed="0.000911"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.237944" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.237794" elapsed="0.000169"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>isinstance($response.json(), list)</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.237999" elapsed="0.000115"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.236742" elapsed="0.001406"/>
+</test>
+<test id="s1-t7" name="Get Products With Nonexistent Category Returns Empty List" line="82">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.238374" level="INFO">${params} = {'category': 'nonexistent-category'}</msg>
+<var>${params}</var>
+<arg>category=nonexistent-category</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.238318" elapsed="0.000065"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.239373" level="INFO">GET Request : url=http://localhost:3001/products?category=nonexistent-category 
+ path_url=/products?category=nonexistent-category 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.239409" level="INFO">GET Response : url=http://localhost:3001/products?category=nonexistent-category 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '2', 'ETag': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body=[] 
+ </msg>
+<msg time="2026-07-06T14:03:04.239467" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/products</arg>
+<arg>params=${params}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.238466" elapsed="0.001013"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.239781" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.239548" elapsed="0.000256"/>
+</kw>
+<kw name="Should Be Empty" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.240019" level="INFO">Length is 0.</msg>
+<arg>${response.json()}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.239848" elapsed="0.000189"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.238201" elapsed="0.001886"/>
+</test>
+<test id="s1-t8" name="Get Products With Injection String Category Returns Empty List" line="88">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.240472" level="INFO">${params} = {'category': '&lt;script&gt;alert(1)&lt;/script&gt;'}</msg>
+<var>${params}</var>
+<arg>category=&lt;script&gt;alert(1)&lt;/script&gt;</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.240390" elapsed="0.000093"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.241444" level="INFO">GET Request : url=http://localhost:3001/products?category=%3Cscript%3Ealert%281%29%3C%2Fscript%3E 
+ path_url=/products?category=%3Cscript%3Ealert%281%29%3C%2Fscript%3E 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.241468" level="INFO">GET Response : url=http://localhost:3001/products?category=%3Cscript%3Ealert%281%29%3C%2Fscript%3E 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '2', 'ETag': 'W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body=[] 
+ </msg>
+<msg time="2026-07-06T14:03:04.241503" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/products</arg>
+<arg>params=${params}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.240527" elapsed="0.000985"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.241719" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.241558" elapsed="0.000181"/>
+</kw>
+<kw name="Should Be Empty" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.241935" level="INFO">Length is 0.</msg>
+<arg>${response.json()}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.241776" elapsed="0.000175"/>
+</kw>
+<kw name="Should Not Contain" owner="BuiltIn">
+<arg>${response.text}</arg>
+<arg>&lt;script&gt;</arg>
+<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.241987" elapsed="0.000150"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.240181" elapsed="0.001995"/>
+</test>
+<test id="s1-t9" name="Get Product By Valid ID Returns 200" line="98">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.243129" level="INFO">GET Request : url=http://localhost:3001/products/1 
+ path_url=/products/1 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.243157" level="INFO">GET Response : url=http://localhost:3001/products/1 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '205', 'ETag': 'W/"cd-JOrilze8+eZKaX6WCxaFza+kfh4"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"id":1,"name":"Laptop Pro 15\"","description":"High-performance laptop with 15-inch display, 16GB RAM, 512GB SSD","price":1299.99,"category":"computers","stock":10,"image":"laptop-pro.jpg","inStock":true} 
+ </msg>
+<msg time="2026-07-06T14:03:04.243196" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/products/1</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.242359" elapsed="0.000846"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.243422" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.243260" elapsed="0.000181"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.243629" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.json()}[id]</arg>
+<arg>1</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.243476" elapsed="0.000171"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.242242" elapsed="0.001441"/>
+</test>
+<test id="s1-t10" name="Get Product With Unknown ID Returns 404" line="103">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.244542" level="INFO">GET Request : url=http://localhost:3001/products/99999 
+ path_url=/products/99999 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.244563" level="INFO">GET Response : url=http://localhost:3001/products/99999 
+ status=404, reason=Not Found 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '29', 'ETag': 'W/"1d-KH4ngqV3S/XmJmUEKpwjFfjZ2wg"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"Product not found"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.244594" level="INFO">${response} = &lt;Response [404]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/products/99999</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.243845" elapsed="0.000758"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.244819" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>404</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.244676" elapsed="0.000162"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.243742" elapsed="0.001129"/>
+</test>
+<test id="s1-t11" name="Get Product With Invalid ID Format Does Not Return 500" line="107">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.245939" level="INFO">GET Request : url=http://localhost:3001/products/abc 
+ path_url=/products/abc 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.245980" level="INFO">GET Response : url=http://localhost:3001/products/abc 
+ status=404, reason=Not Found 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '29', 'ETag': 'W/"1d-KH4ngqV3S/XmJmUEKpwjFfjZ2wg"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"Product not found"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.246029" level="INFO">${response} = &lt;Response [404]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/products/abc</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.245033" elapsed="0.001015"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${{[400, 404]}}</arg>
+<arg>${response.status_code}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.246124" elapsed="0.000317"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.244926" elapsed="0.001557"/>
+</test>
+<test id="s1-t12" name="Get Cart With Valid Token Returns 200" line="114">
+<kw name="Get Auth Headers">
+<kw name="Get Auth Token" owner="techshop_keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.247268" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.247172" elapsed="0.000107"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.248391" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '57', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.248421" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '275', 'ETag': 'W/"113-XSGV1Fy0aGWc5D3XEZeq7YmcPG0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM","user":{"id":1,"email":"demo@techshop.com","name":"Demo User"}} 
+ </msg>
+<msg time="2026-07-06T14:03:04.248468" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.247318" elapsed="0.001160"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.248704" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.248529" elapsed="0.000197"/>
+</kw>
+<return>
+<value>${response.json()}[token]</value>
+<status status="PASS" start="2026-07-06T14:03:04.248750" elapsed="0.000025"/>
+</return>
+<msg time="2026-07-06T14:03:04.248950" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM</msg>
+<var>${token}</var>
+<status status="PASS" start="2026-07-06T14:03:04.246815" elapsed="0.002146"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.249087" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.249004" elapsed="0.000093"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-07-06T14:03:04.249115" elapsed="0.000014"/>
+</return>
+<msg time="2026-07-06T14:03:04.249172" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-07-06T14:03:04.246704" elapsed="0.002477"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.250179" level="INFO">GET Request : url=http://localhost:3001/cart 
+ path_url=/cart 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.250220" level="INFO">GET Response : url=http://localhost:3001/cart 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '22', 'ETag': 'W/"16-IfdoExwkJFY0ev5dtvGKgtFEuV8"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"items":[],"total":0} 
+ </msg>
+<msg time="2026-07-06T14:03:04.250267" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.249215" elapsed="0.001063"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.250572" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.250355" elapsed="0.000240"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.246542" elapsed="0.004100"/>
+</test>
+<test id="s1-t13" name="Get Cart Without Auth Header Returns 401" line="119">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.251645" level="INFO">GET Request : url=http://localhost:3001/cart 
+ path_url=/cart 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.251739" level="INFO">GET Response : url=http://localhost:3001/cart 
+ status=401, reason=Unauthorized 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '29', 'ETag': 'W/"1d-TdeScqFQy+dbnhB6tfnSArDhevg"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"No token provided"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.251775" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.250859" elapsed="0.000926"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.252008" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>401</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.251831" elapsed="0.000197"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.250720" elapsed="0.001344"/>
+</test>
+<test id="s1-t14" name="Get Cart With Invalid Token Returns 401" line="123">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.252347" level="INFO">${headers} = {'Authorization': 'Bearer invalid.token.value'}</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer invalid.token.value</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.252248" elapsed="0.000113"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.253217" level="INFO">GET Request : url=http://localhost:3001/cart 
+ path_url=/cart 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer invalid.token.value'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.253248" level="INFO">GET Response : url=http://localhost:3001/cart 
+ status=401, reason=Unauthorized 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '36', 'ETag': 'W/"24-GNDyEGK1yBKJB1sFHYU2n5ZGC54"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"Invalid or expired token"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.253293" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.252411" elapsed="0.000892"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.253597" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>401</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.253362" elapsed="0.000259"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.252127" elapsed="0.001543"/>
+</test>
+<test id="s1-t15" name="Add Item To Cart Returns 201" line="131">
+<kw name="Get Auth Headers">
+<kw name="Get Auth Token" owner="techshop_keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.254175" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.254070" elapsed="0.000118"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.255199" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '57', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.255223" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '275', 'ETag': 'W/"113-XSGV1Fy0aGWc5D3XEZeq7YmcPG0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM","user":{"id":1,"email":"demo@techshop.com","name":"Demo User"}} 
+ </msg>
+<msg time="2026-07-06T14:03:04.255257" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.254229" elapsed="0.001037"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.255471" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.255308" elapsed="0.000183"/>
+</kw>
+<return>
+<value>${response.json()}[token]</value>
+<status status="PASS" start="2026-07-06T14:03:04.255516" elapsed="0.000018"/>
+</return>
+<msg time="2026-07-06T14:03:04.255713" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM</msg>
+<var>${token}</var>
+<status status="PASS" start="2026-07-06T14:03:04.253992" elapsed="0.001732"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.255840" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.255762" elapsed="0.000088"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-07-06T14:03:04.255868" elapsed="0.000010"/>
+</return>
+<msg time="2026-07-06T14:03:04.255919" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-07-06T14:03:04.253892" elapsed="0.002035"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.256244" level="INFO">${body} = {'productId': 1, 'quantity': 2}</msg>
+<var>${body}</var>
+<arg>productId=${1}</arg>
+<arg>quantity=${2}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.255968" elapsed="0.000297"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.257223" level="INFO">POST Request : url=http://localhost:3001/cart 
+ path_url=/cart 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM', 'Content-Length': '31', 'Content-Type': 'application/json'} 
+ body=b'{"productId": 1, "quantity": 2}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.257282" level="INFO">POST Response : url=http://localhost:3001/cart 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '116', 'ETag': 'W/"74-BnggkNnmL7336Nrzh68MVcZc7/0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"items":[{"id":1783360984256,"productId":1,"name":"Laptop Pro 15\"","price":1299.99,"quantity":2}],"total":2599.98} 
+ </msg>
+<msg time="2026-07-06T14:03:04.257319" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.256324" elapsed="0.001004"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.257544" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>201</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.257374" elapsed="0.000190"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.253744" elapsed="0.003857"/>
+</test>
+<test id="s1-t16" name="Add Item To Cart With Invalid Quantity Returns 400" line="137">
+<kw name="Get Auth Headers">
+<kw name="Get Auth Token" owner="techshop_keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.258047" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.257962" elapsed="0.000095"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.258921" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '57', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.258955" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '275', 'ETag': 'W/"113-XSGV1Fy0aGWc5D3XEZeq7YmcPG0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM","user":{"id":1,"email":"demo@techshop.com","name":"Demo User"}} 
+ </msg>
+<msg time="2026-07-06T14:03:04.259016" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.258093" elapsed="0.000933"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.259291" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.259087" elapsed="0.000230"/>
+</kw>
+<return>
+<value>${response.json()}[token]</value>
+<status status="PASS" start="2026-07-06T14:03:04.259336" elapsed="0.000015"/>
+</return>
+<msg time="2026-07-06T14:03:04.259525" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM</msg>
+<var>${token}</var>
+<status status="PASS" start="2026-07-06T14:03:04.257890" elapsed="0.001645"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.259680" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.259583" elapsed="0.000108"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-07-06T14:03:04.259708" elapsed="0.000010"/>
+</return>
+<msg time="2026-07-06T14:03:04.259759" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-07-06T14:03:04.257799" elapsed="0.001968"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.260026" level="INFO">${body} = {'productId': 1, 'quantity': 0}</msg>
+<var>${body}</var>
+<arg>productId=${1}</arg>
+<arg>quantity=${0}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.259804" elapsed="0.000232"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.261185" level="INFO">POST Request : url=http://localhost:3001/cart 
+ path_url=/cart 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM', 'Content-Length': '31', 'Content-Type': 'application/json'} 
+ body=b'{"productId": 1, "quantity": 0}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.261213" level="INFO">POST Response : url=http://localhost:3001/cart 
+ status=400, reason=Bad Request 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '57', 'ETag': 'W/"39-Vh+cWpFH3bWOawVeVTsplpwgPCo"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"Quantity must be a whole number of at least 1"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.261256" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.260074" elapsed="0.001192"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.261514" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>400</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.261319" elapsed="0.000222"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.257662" elapsed="0.003942"/>
+</test>
+<test id="s1-t17" name="Add Item To Cart With Nonexistent Product Returns 404" line="143">
+<kw name="Get Auth Headers">
+<kw name="Get Auth Token" owner="techshop_keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.262135" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.262036" elapsed="0.000183"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.263205" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '57', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.263227" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '275', 'ETag': 'W/"113-XSGV1Fy0aGWc5D3XEZeq7YmcPG0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM","user":{"id":1,"email":"demo@techshop.com","name":"Demo User"}} 
+ </msg>
+<msg time="2026-07-06T14:03:04.263262" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.262266" elapsed="0.001006"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.263474" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.263313" elapsed="0.000181"/>
+</kw>
+<return>
+<value>${response.json()}[token]</value>
+<status status="PASS" start="2026-07-06T14:03:04.263514" elapsed="0.000017"/>
+</return>
+<msg time="2026-07-06T14:03:04.263691" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM</msg>
+<var>${token}</var>
+<status status="PASS" start="2026-07-06T14:03:04.261957" elapsed="0.001744"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.263814" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.263739" elapsed="0.000085"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-07-06T14:03:04.263841" elapsed="0.000010"/>
+</return>
+<msg time="2026-07-06T14:03:04.263891" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-07-06T14:03:04.261859" elapsed="0.002041"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.264178" level="INFO">${body} = {'productId': 99999, 'quantity': 1}</msg>
+<var>${body}</var>
+<arg>productId=${99999}</arg>
+<arg>quantity=${1}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.263937" elapsed="0.000253"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.265157" level="INFO">POST Request : url=http://localhost:3001/cart 
+ path_url=/cart 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM', 'Content-Length': '35', 'Content-Type': 'application/json'} 
+ body=b'{"productId": 99999, "quantity": 1}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.265191" level="INFO">POST Response : url=http://localhost:3001/cart 
+ status=404, reason=Not Found 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '29', 'ETag': 'W/"1d-KH4ngqV3S/XmJmUEKpwjFfjZ2wg"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"Product not found"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.265230" level="INFO">${response} = &lt;Response [404]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.264255" elapsed="0.000987"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.265486" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>404</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.265304" elapsed="0.000203"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.261695" elapsed="0.003853"/>
+</test>
+<test id="s1-t18" name="Add Item To Cart Without Auth Header Returns 401" line="149">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.265993" level="INFO">${body} = {'productId': 1, 'quantity': 2}</msg>
+<var>${body}</var>
+<arg>productId=${1}</arg>
+<arg>quantity=${2}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.265762" elapsed="0.000241"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.266958" level="INFO">POST Request : url=http://localhost:3001/cart 
+ path_url=/cart 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '31', 'Content-Type': 'application/json'} 
+ body=b'{"productId": 1, "quantity": 2}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.266987" level="INFO">POST Response : url=http://localhost:3001/cart 
+ status=401, reason=Unauthorized 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '29', 'ETag': 'W/"1d-TdeScqFQy+dbnhB6tfnSArDhevg"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"No token provided"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.267029" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.266044" elapsed="0.000996"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.267252" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>401</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.267098" elapsed="0.000173"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.265622" elapsed="0.001683"/>
+</test>
+<test id="s1-t19" name="Update Cart Item Returns 200" line="157">
+<kw name="Get Auth Headers">
+<kw name="Get Auth Token" owner="techshop_keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.267811" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.267726" elapsed="0.000094"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.268734" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '57', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.268757" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '275', 'ETag': 'W/"113-XSGV1Fy0aGWc5D3XEZeq7YmcPG0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM","user":{"id":1,"email":"demo@techshop.com","name":"Demo User"}} 
+ </msg>
+<msg time="2026-07-06T14:03:04.268792" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.267857" elapsed="0.000944"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.269021" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.268846" elapsed="0.000196"/>
+</kw>
+<return>
+<value>${response.json()}[token]</value>
+<status status="PASS" start="2026-07-06T14:03:04.269062" elapsed="0.000014"/>
+</return>
+<msg time="2026-07-06T14:03:04.269237" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM</msg>
+<var>${token}</var>
+<status status="PASS" start="2026-07-06T14:03:04.267653" elapsed="0.001595"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.269365" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.269287" elapsed="0.000088"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-07-06T14:03:04.269393" elapsed="0.000010"/>
+</return>
+<msg time="2026-07-06T14:03:04.269444" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-07-06T14:03:04.267552" elapsed="0.001900"/>
+</kw>
+<kw name="Add Product To Cart And Get Item Id">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.270000" level="INFO">${body} = {'productId': 1, 'quantity': 2}</msg>
+<var>${body}</var>
+<arg>productId=${product_id}</arg>
+<arg>quantity=${quantity}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.269906" elapsed="0.000107"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.270978" level="INFO">POST Request : url=http://localhost:3001/cart 
+ path_url=/cart 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM', 'Content-Length': '31', 'Content-Type': 'application/json'} 
+ body=b'{"productId": 1, "quantity": 2}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.271002" level="INFO">POST Response : url=http://localhost:3001/cart 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '116', 'ETag': 'W/"74-2YAv+ZRxRDrRp7YXvDiORiFILbg"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"items":[{"id":1783360984256,"productId":1,"name":"Laptop Pro 15\"","price":1299.99,"quantity":4}],"total":5199.96} 
+ </msg>
+<msg time="2026-07-06T14:03:04.271035" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.270052" elapsed="0.000992"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.271241" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>201</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.271086" elapsed="0.000176"/>
+</kw>
+<for flavor="IN">
+<iter>
+<if>
+<branch type="IF" condition="${item}[productId] == ${product_id}">
+<return>
+<value>${item}[id]</value>
+<status status="PASS" start="2026-07-06T14:03:04.271579" elapsed="0.000012"/>
+</return>
+<status status="PASS" start="2026-07-06T14:03:04.271519" elapsed="0.000086"/>
+</branch>
+<status status="PASS" start="2026-07-06T14:03:04.271509" elapsed="0.000107"/>
+</if>
+<var name="${item}">{'id': 1783360984256, 'productId': 1, 'name': 'Laptop Pro 15"', 'price': 1299.99, 'quantity': 4}</var>
+<status status="PASS" start="2026-07-06T14:03:04.271488" elapsed="0.000141"/>
+</iter>
+<var>${item}</var>
+<value>@{response.json()}[items]</value>
+<status status="PASS" start="2026-07-06T14:03:04.271292" elapsed="0.000350"/>
+</for>
+<kw name="Fail" owner="BuiltIn">
+<arg>Could not find cart item for product ${product_id} in response</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-07-06T14:03:04.271678" elapsed="0.000008"/>
+</kw>
+<msg time="2026-07-06T14:03:04.271735" level="INFO">${item_id} = 1783360984256</msg>
+<var>${item_id}</var>
+<arg>${headers}</arg>
+<status status="PASS" start="2026-07-06T14:03:04.269592" elapsed="0.002152"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.272280" level="INFO">${body} = {'quantity': 3}</msg>
+<var>${body}</var>
+<arg>quantity=${3}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.271784" elapsed="0.000507"/>
+</kw>
+<kw name="PUT On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.273304" level="INFO">PUT Request : url=http://localhost:3001/cart/1783360984256 
+ path_url=/cart/1783360984256 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM', 'Content-Length': '15', 'Content-Type': 'application/json'} 
+ body=b'{"quantity": 3}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.273420" level="INFO">PUT Response : url=http://localhost:3001/cart/1783360984256 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '116', 'ETag': 'W/"74-acutwK8xAw/FNc08KbUiCI0KZlA"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"items":[{"id":1783360984256,"productId":1,"name":"Laptop Pro 15\"","price":1299.99,"quantity":3}],"total":3899.97} 
+ </msg>
+<msg time="2026-07-06T14:03:04.273484" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart/${item_id}</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.272331" elapsed="0.001167"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.273774" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.273568" elapsed="0.000232"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.267419" elapsed="0.006425"/>
+</test>
+<test id="s1-t20" name="Update Cart Item With Invalid Quantity Returns 400" line="164">
+<kw name="Get Auth Headers">
+<kw name="Get Auth Token" owner="techshop_keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.274427" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.274317" elapsed="0.000120"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.275467" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '57', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.275494" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '275', 'ETag': 'W/"113-XSGV1Fy0aGWc5D3XEZeq7YmcPG0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM","user":{"id":1,"email":"demo@techshop.com","name":"Demo User"}} 
+ </msg>
+<msg time="2026-07-06T14:03:04.275533" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.274476" elapsed="0.001070"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.275782" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.275603" elapsed="0.000201"/>
+</kw>
+<return>
+<value>${response.json()}[token]</value>
+<status status="PASS" start="2026-07-06T14:03:04.275825" elapsed="0.000016"/>
+</return>
+<msg time="2026-07-06T14:03:04.276041" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM</msg>
+<var>${token}</var>
+<status status="PASS" start="2026-07-06T14:03:04.274236" elapsed="0.001816"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.276184" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.276098" elapsed="0.000096"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-07-06T14:03:04.276215" elapsed="0.000011"/>
+</return>
+<msg time="2026-07-06T14:03:04.276267" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-07-06T14:03:04.274112" elapsed="0.002164"/>
+</kw>
+<kw name="Add Product To Cart And Get Item Id">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.276713" level="INFO">${body} = {'productId': 1, 'quantity': 2}</msg>
+<var>${body}</var>
+<arg>productId=${product_id}</arg>
+<arg>quantity=${quantity}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.276624" elapsed="0.000099"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.277655" level="INFO">POST Request : url=http://localhost:3001/cart 
+ path_url=/cart 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM', 'Content-Length': '31', 'Content-Type': 'application/json'} 
+ body=b'{"productId": 1, "quantity": 2}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.277683" level="INFO">POST Response : url=http://localhost:3001/cart 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '116', 'ETag': 'W/"74-GQXnG9jdMymgz+N9dMzpXjAKVWc"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"items":[{"id":1783360984256,"productId":1,"name":"Laptop Pro 15\"","price":1299.99,"quantity":5}],"total":6499.95} 
+ </msg>
+<msg time="2026-07-06T14:03:04.277723" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.276761" elapsed="0.000971"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.277957" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>201</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.277783" elapsed="0.000194"/>
+</kw>
+<for flavor="IN">
+<iter>
+<if>
+<branch type="IF" condition="${item}[productId] == ${product_id}">
+<return>
+<value>${item}[id]</value>
+<status status="PASS" start="2026-07-06T14:03:04.278255" elapsed="0.000011"/>
+</return>
+<status status="PASS" start="2026-07-06T14:03:04.278204" elapsed="0.000076"/>
+</branch>
+<status status="PASS" start="2026-07-06T14:03:04.278196" elapsed="0.000127"/>
+</if>
+<var name="${item}">{'id': 1783360984256, 'productId': 1, 'name': 'Laptop Pro 15"', 'price': 1299.99, 'quantity': 5}</var>
+<status status="PASS" start="2026-07-06T14:03:04.278182" elapsed="0.000154"/>
+</iter>
+<var>${item}</var>
+<value>@{response.json()}[items]</value>
+<status status="PASS" start="2026-07-06T14:03:04.278001" elapsed="0.000347"/>
+</for>
+<kw name="Fail" owner="BuiltIn">
+<arg>Could not find cart item for product ${product_id} in response</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-07-06T14:03:04.278383" elapsed="0.000007"/>
+</kw>
+<msg time="2026-07-06T14:03:04.278436" level="INFO">${item_id} = 1783360984256</msg>
+<var>${item_id}</var>
+<arg>${headers}</arg>
+<status status="PASS" start="2026-07-06T14:03:04.276363" elapsed="0.002082"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.278623" level="INFO">${body} = {'quantity': 0}</msg>
+<var>${body}</var>
+<arg>quantity=${0}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.278484" elapsed="0.000148"/>
+</kw>
+<kw name="PUT On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.279565" level="INFO">PUT Request : url=http://localhost:3001/cart/1783360984256 
+ path_url=/cart/1783360984256 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM', 'Content-Length': '15', 'Content-Type': 'application/json'} 
+ body=b'{"quantity": 0}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.279587" level="INFO">PUT Response : url=http://localhost:3001/cart/1783360984256 
+ status=400, reason=Bad Request 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '39', 'ETag': 'W/"27-t7stKGfKrLw4mGw0n7Rn2VQ0OBo"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"Quantity must be at least 1"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.279618" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart/${item_id}</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.278666" elapsed="0.000962"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.279812" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>400</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.279667" elapsed="0.000164"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.273928" elapsed="0.005938"/>
+</test>
+<test id="s1-t21" name="Update Nonexistent Cart Item Returns 404" line="171">
+<kw name="Get Auth Headers">
+<kw name="Get Auth Token" owner="techshop_keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.280295" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.280214" elapsed="0.000090"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.281244" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '57', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.281287" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '275', 'ETag': 'W/"113-XSGV1Fy0aGWc5D3XEZeq7YmcPG0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM","user":{"id":1,"email":"demo@techshop.com","name":"Demo User"}} 
+ </msg>
+<msg time="2026-07-06T14:03:04.281342" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.280345" elapsed="0.001009"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.281674" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.281437" elapsed="0.000264"/>
+</kw>
+<return>
+<value>${response.json()}[token]</value>
+<status status="PASS" start="2026-07-06T14:03:04.281726" elapsed="0.000020"/>
+</return>
+<msg time="2026-07-06T14:03:04.281934" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM</msg>
+<var>${token}</var>
+<status status="PASS" start="2026-07-06T14:03:04.280144" elapsed="0.001802"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.282097" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.282005" elapsed="0.000103"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-07-06T14:03:04.282126" elapsed="0.000011"/>
+</return>
+<msg time="2026-07-06T14:03:04.282188" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-07-06T14:03:04.280059" elapsed="0.002143"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.282385" level="INFO">${body} = {'quantity': 2}</msg>
+<var>${body}</var>
+<arg>quantity=${2}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.282242" elapsed="0.000152"/>
+</kw>
+<kw name="PUT On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.283508" level="INFO">PUT Request : url=http://localhost:3001/cart/99999 
+ path_url=/cart/99999 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM', 'Content-Length': '15', 'Content-Type': 'application/json'} 
+ body=b'{"quantity": 2}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.283606" level="INFO">PUT Response : url=http://localhost:3001/cart/99999 
+ status=404, reason=Not Found 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '31', 'ETag': 'W/"1f-RR5Vu3eCS8HqV13CUeJyM0WrZJw"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"Cart item not found"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.283644" level="INFO">${response} = &lt;Response [404]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart/99999</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.282445" elapsed="0.001209"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.283882" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>404</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.283702" elapsed="0.000201"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.279935" elapsed="0.004009"/>
+</test>
+<test id="s1-t22" name="Update Cart Item Without Auth Header Returns 401" line="177">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.284320" level="INFO">${body} = {'quantity': 2}</msg>
+<var>${body}</var>
+<arg>quantity=${2}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.284172" elapsed="0.000157"/>
+</kw>
+<kw name="PUT On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.285204" level="INFO">PUT Request : url=http://localhost:3001/cart/1 
+ path_url=/cart/1 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '15', 'Content-Type': 'application/json'} 
+ body=b'{"quantity": 2}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.285227" level="INFO">PUT Response : url=http://localhost:3001/cart/1 
+ status=401, reason=Unauthorized 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '29', 'ETag': 'W/"1d-TdeScqFQy+dbnhB6tfnSArDhevg"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"No token provided"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.285261" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart/1</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.284368" elapsed="0.000903"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.285475" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>401</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.285316" elapsed="0.000184"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.284031" elapsed="0.001507"/>
+</test>
+<test id="s1-t23" name="Remove Cart Item Returns 200" line="185">
+<kw name="Get Auth Headers">
+<kw name="Get Auth Token" owner="techshop_keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.286155" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.286044" elapsed="0.000123"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.287036" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '57', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.287057" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '275', 'ETag': 'W/"113-XSGV1Fy0aGWc5D3XEZeq7YmcPG0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM","user":{"id":1,"email":"demo@techshop.com","name":"Demo User"}} 
+ </msg>
+<msg time="2026-07-06T14:03:04.287090" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.286209" elapsed="0.000891"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.287294" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.287139" elapsed="0.000174"/>
+</kw>
+<return>
+<value>${response.json()}[token]</value>
+<status status="PASS" start="2026-07-06T14:03:04.287331" elapsed="0.000013"/>
+</return>
+<msg time="2026-07-06T14:03:04.287499" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM</msg>
+<var>${token}</var>
+<status status="PASS" start="2026-07-06T14:03:04.285929" elapsed="0.001580"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.287620" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.287546" elapsed="0.000084"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-07-06T14:03:04.287646" elapsed="0.000010"/>
+</return>
+<msg time="2026-07-06T14:03:04.287696" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-07-06T14:03:04.285808" elapsed="0.001896"/>
+</kw>
+<kw name="Add Product To Cart And Get Item Id">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.288123" level="INFO">${body} = {'productId': 1, 'quantity': 2}</msg>
+<var>${body}</var>
+<arg>productId=${product_id}</arg>
+<arg>quantity=${quantity}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.288040" elapsed="0.000093"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.289138" level="INFO">POST Request : url=http://localhost:3001/cart 
+ path_url=/cart 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM', 'Content-Length': '31', 'Content-Type': 'application/json'} 
+ body=b'{"productId": 1, "quantity": 2}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.289225" level="INFO">POST Response : url=http://localhost:3001/cart 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '116', 'ETag': 'W/"74-z72EOYeelebP2drTFu7Mcvb+cLQ"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"items":[{"id":1783360984256,"productId":1,"name":"Laptop Pro 15\"","price":1299.99,"quantity":7}],"total":9099.93} 
+ </msg>
+<msg time="2026-07-06T14:03:04.289280" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.288169" elapsed="0.001127"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.289642" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>201</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.289378" elapsed="0.000295"/>
+</kw>
+<for flavor="IN">
+<iter>
+<if>
+<branch type="IF" condition="${item}[productId] == ${product_id}">
+<return>
+<value>${item}[id]</value>
+<status status="PASS" start="2026-07-06T14:03:04.290034" elapsed="0.000014"/>
+</return>
+<status status="PASS" start="2026-07-06T14:03:04.289966" elapsed="0.000100"/>
+</branch>
+<status status="PASS" start="2026-07-06T14:03:04.289959" elapsed="0.000118"/>
+</if>
+<var name="${item}">{'id': 1783360984256, 'productId': 1, 'name': 'Laptop Pro 15"', 'price': 1299.99, 'quantity': 7}</var>
+<status status="PASS" start="2026-07-06T14:03:04.289937" elapsed="0.000152"/>
+</iter>
+<var>${item}</var>
+<value>@{response.json()}[items]</value>
+<status status="PASS" start="2026-07-06T14:03:04.289712" elapsed="0.000393"/>
+</for>
+<kw name="Fail" owner="BuiltIn">
+<arg>Could not find cart item for product ${product_id} in response</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-07-06T14:03:04.290156" elapsed="0.000012"/>
+</kw>
+<msg time="2026-07-06T14:03:04.290231" level="INFO">${item_id} = 1783360984256</msg>
+<var>${item_id}</var>
+<arg>${headers}</arg>
+<status status="PASS" start="2026-07-06T14:03:04.287784" elapsed="0.002456"/>
+</kw>
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.291262" level="INFO">DELETE Request : url=http://localhost:3001/cart/1783360984256 
+ path_url=/cart/1783360984256 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.291285" level="INFO">DELETE Response : url=http://localhost:3001/cart/1783360984256 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '22', 'ETag': 'W/"16-IfdoExwkJFY0ev5dtvGKgtFEuV8"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"items":[],"total":0} 
+ </msg>
+<msg time="2026-07-06T14:03:04.291320" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart/${item_id}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.290288" elapsed="0.001042"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.291537" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.291375" elapsed="0.000183"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.285634" elapsed="0.005999"/>
+</test>
+<test id="s1-t24" name="Remove Nonexistent Cart Item Returns 404" line="191">
+<kw name="Get Auth Headers">
+<kw name="Get Auth Token" owner="techshop_keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.292104" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.292016" elapsed="0.000098"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.292979" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '57', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.293006" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '275', 'ETag': 'W/"113-XSGV1Fy0aGWc5D3XEZeq7YmcPG0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM","user":{"id":1,"email":"demo@techshop.com","name":"Demo User"}} 
+ </msg>
+<msg time="2026-07-06T14:03:04.293052" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.292152" elapsed="0.000909"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.293310" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.293115" elapsed="0.000214"/>
+</kw>
+<return>
+<value>${response.json()}[token]</value>
+<status status="PASS" start="2026-07-06T14:03:04.293348" elapsed="0.000017"/>
+</return>
+<msg time="2026-07-06T14:03:04.293535" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM</msg>
+<var>${token}</var>
+<status status="PASS" start="2026-07-06T14:03:04.291942" elapsed="0.001638"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.293731" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.293641" elapsed="0.000100"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-07-06T14:03:04.293758" elapsed="0.000013"/>
+</return>
+<msg time="2026-07-06T14:03:04.293814" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-07-06T14:03:04.291849" elapsed="0.002003"/>
+</kw>
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.294617" level="INFO">DELETE Request : url=http://localhost:3001/cart/99999 
+ path_url=/cart/99999 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.294640" level="INFO">DELETE Response : url=http://localhost:3001/cart/99999 
+ status=404, reason=Not Found 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '31', 'ETag': 'W/"1f-RR5Vu3eCS8HqV13CUeJyM0WrZJw"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"Cart item not found"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.294673" level="INFO">${response} = &lt;Response [404]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart/99999</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.293886" elapsed="0.000796"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.294883" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>404</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.294722" elapsed="0.000181"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.291709" elapsed="0.003228"/>
+</test>
+<test id="s1-t25" name="Remove Cart Item Without Auth Header Returns 401" line="196">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.295804" level="INFO">DELETE Request : url=http://localhost:3001/cart/1 
+ path_url=/cart/1 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.295825" level="INFO">DELETE Response : url=http://localhost:3001/cart/1 
+ status=401, reason=Unauthorized 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '29', 'ETag': 'W/"1d-TdeScqFQy+dbnhB6tfnSArDhevg"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"No token provided"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.295857" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/cart/1</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.295100" elapsed="0.000767"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.296063" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>401</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.295908" elapsed="0.000174"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.294994" elapsed="0.001122"/>
+</test>
+<test id="s1-t26" name="Get Orders With Valid Token Returns 200" line="203">
+<kw name="Get Auth Headers">
+<kw name="Get Auth Token" owner="techshop_keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.296916" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.296831" elapsed="0.000095"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.297769" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '57', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.297813" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '275', 'ETag': 'W/"113-XSGV1Fy0aGWc5D3XEZeq7YmcPG0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM","user":{"id":1,"email":"demo@techshop.com","name":"Demo User"}} 
+ </msg>
+<msg time="2026-07-06T14:03:04.297867" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.296964" elapsed="0.000920"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.298184" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.297955" elapsed="0.000251"/>
+</kw>
+<return>
+<value>${response.json()}[token]</value>
+<status status="PASS" start="2026-07-06T14:03:04.298228" elapsed="0.000015"/>
+</return>
+<msg time="2026-07-06T14:03:04.298414" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM</msg>
+<var>${token}</var>
+<status status="PASS" start="2026-07-06T14:03:04.296759" elapsed="0.001665"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.298575" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.298478" elapsed="0.000107"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-07-06T14:03:04.298602" elapsed="0.000011"/>
+</return>
+<msg time="2026-07-06T14:03:04.298662" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-07-06T14:03:04.296665" elapsed="0.002006"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.299679" level="INFO">GET Request : url=http://localhost:3001/orders 
+ path_url=/orders 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.299748" level="INFO">GET Response : url=http://localhost:3001/orders 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '2633', 'ETag': 'W/"a49-MVcoEFnO6gmIlfB4IlE6Hk1Vj94"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body=[{"id":"ORD-1783360684974","userId":1,"items":[{"productId":1,"quantity":2}],"shipping":{"firstName":"Jane","lastName":"Doe","email":"jane@example.com","phone":"0412345678"},"payment":{"last4":"1111","expiryDate":"12/28"},"total":0,"status":"confirmed","createdAt":"2026-07-06T17:58:04.974Z"},{"id":"ORD-1783360726591","userId":1,"items":[{"productId":1,"quantity":2}],"shipping":{"firstName":"Jane","lastName":"Doe","email":"jane@example.com","phone":"0412345678"},"payment":{"last4":"1111","expiryDate":"12/28"},"total":0,"status":"confirmed","createdAt":"2026-07-06T17:58:46.591Z"},{"id":"ORD-1783360749971","userId":1,"items":[{"productId":1,"quantity":2}],"shipping":{"firstName":"Jane","lastName":"Doe","email":"jane@example.com","phone":"0412345678"},"payment":{"last4":"1111","expiryDate":"12/28"},"total":0,"status":"confirmed","createdAt":"2026-07-06T17:59:09.971Z"},{"id":"ORD-1783360749983","userId":1,"items":[{"productId":1,"quantity":0}],"shipping":{"firstName":"Jane","lastName":"Doe","email":"jane@example.com","phone":"0412345678"},"payment":{"last4":"1111","expiryDate":"12/28"},"total":0,"status":"confirmed","createdAt":"2026-07-06T17:59:09.983Z"},{"id":"ORD-1783360750012","userId":1,"items":[{"productId":1,"quantity":-1}],"shipping":{"firstName":"Jane","lastName":"Doe","email":"jane@example.com","phone":"0412345678"},"payment":{"last4":"1111","expiryDate":"12/28"},"total":0,"status":"confirmed","createdAt":"2026-07-06T17:59:10.012Z"},{"id":"ORD-1783360750031","userId":1,"items":[{"productId":1,"quantity":-100}],"shipping":{"firstName":"Jane","lastName":"Doe","email":"jane@example.com","phone":"0412345678"},"payment":{"last4":"1111","expiryDate":"12/28"},"total":0,"status":"confirmed","createdAt":"2026-07-06T17:59:10.031Z"},{"id":"ORD-1783360785850","userId":1,"items":[{"productId":1,"quantity":2}],"shipping":{"firstName":"Jane","lastName":"Doe","email":"jane@example.com","phone":"0412345678"},"payment":{"last4":"1111","expiryDate":"12/28"},"total":0,"status":"confirmed","createdAt":"2026-07-06T17:59:45.850Z"},{"id":"ORD-1783360945455","userId":1,"items":[{"productId":1,"quantity":2}],"shipping":{"firstName":"Jane","lastName":"Doe","email":"jane@example.com","phone":"0412345678"},"payment":{"last4":"1111","expiryDate":"12/28"},"total":0,"status":"confirmed","createdAt":"2026-07-06T18:02:25.455Z"},{"id":"ORD-1783360979845","userId":1,"items":[{"productId":1,"quantity":2}],"shipping":{"firstName":"Jane","lastName":"Doe","email":"jane@example.com","phone":"0412345678"},"payment":{"last4":"1111","expiryDate":"12/28"},"total":0,"status":"confirmed","createdAt":"2026-07-06T18:02:59.845Z"}] 
+ </msg>
+<msg time="2026-07-06T14:03:04.299792" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/orders</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.298714" elapsed="0.001087"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.300001" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.299844" elapsed="0.000176"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>isinstance($response.json(), list)</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.300059" elapsed="0.000115"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.296170" elapsed="0.004042"/>
+</test>
+<test id="s1-t27" name="Get Orders Without Auth Header Returns 401" line="209">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.301206" level="INFO">GET Request : url=http://localhost:3001/orders 
+ path_url=/orders 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.301234" level="INFO">GET Response : url=http://localhost:3001/orders 
+ status=401, reason=Unauthorized 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '29', 'ETag': 'W/"1d-TdeScqFQy+dbnhB6tfnSArDhevg"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"No token provided"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.301269" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/orders</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.300448" elapsed="0.000834"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.301518" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>401</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.301334" elapsed="0.000209"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.300316" elapsed="0.001270"/>
+</test>
+<test id="s1-t28" name="Get Orders With Invalid Token Returns 401" line="213">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.301864" level="INFO">${headers} = {'Authorization': 'Bearer invalid.token.value'}</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer invalid.token.value</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.301793" elapsed="0.000081"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.302784" level="INFO">GET Request : url=http://localhost:3001/orders 
+ path_url=/orders 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer invalid.token.value'} 
+ body=None 
+ </msg>
+<msg time="2026-07-06T14:03:04.302818" level="INFO">GET Response : url=http://localhost:3001/orders 
+ status=401, reason=Unauthorized 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '36', 'ETag': 'W/"24-GNDyEGK1yBKJB1sFHYU2n5ZGC54"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"Invalid or expired token"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.302858" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/orders</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.301910" elapsed="0.000963"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.303134" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>401</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.302945" elapsed="0.000213"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.301668" elapsed="0.001528"/>
+</test>
+<test id="s1-t29" name="Place Order With Valid Data Returns 201" line="221">
+<kw name="Get Auth Headers">
+<kw name="Get Auth Token" owner="techshop_keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.303762" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.303634" elapsed="0.000140"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.304743" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '57', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.304776" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '275', 'ETag': 'W/"113-XSGV1Fy0aGWc5D3XEZeq7YmcPG0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM","user":{"id":1,"email":"demo@techshop.com","name":"Demo User"}} 
+ </msg>
+<msg time="2026-07-06T14:03:04.304833" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.303817" elapsed="0.001029"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.305119" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.304910" elapsed="0.000238"/>
+</kw>
+<return>
+<value>${response.json()}[token]</value>
+<status status="PASS" start="2026-07-06T14:03:04.305174" elapsed="0.000015"/>
+</return>
+<msg time="2026-07-06T14:03:04.305354" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM</msg>
+<var>${token}</var>
+<status status="PASS" start="2026-07-06T14:03:04.303552" elapsed="0.001812"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.305489" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.305411" elapsed="0.000088"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-07-06T14:03:04.305516" elapsed="0.000010"/>
+</return>
+<msg time="2026-07-06T14:03:04.305567" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-07-06T14:03:04.303434" elapsed="0.002142"/>
+</kw>
+<kw name="Build Valid Order Payload">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.305917" level="INFO">${item} = {'productId': 1, 'quantity': 2}</msg>
+<var>${item}</var>
+<arg>productId=${1}</arg>
+<arg>quantity=${2}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.305708" elapsed="0.000218"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.306014" level="INFO">${items} = [{'productId': 1, 'quantity': 2}]</msg>
+<var>${items}</var>
+<arg>${item}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.305963" elapsed="0.000059"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.306119" level="INFO">${shipping} = {'firstName': 'Jane', 'lastName': 'Doe', 'email': 'jane@example.com', 'phone': '0412345678'}</msg>
+<var>${shipping}</var>
+<arg>firstName=Jane</arg>
+<arg>lastName=Doe</arg>
+<arg>email=jane@example.com</arg>
+<arg>phone=0412345678</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.306058" elapsed="0.000070"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.306221" level="INFO">${payment} = {'cardNumber': '4111111111111111', 'expiryDate': '12/28', 'cvv': '123'}</msg>
+<var>${payment}</var>
+<arg>cardNumber=4111111111111111</arg>
+<arg>expiryDate=12/28</arg>
+<arg>cvv=123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.306166" elapsed="0.000063"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.306359" level="INFO">${payload} = {'items': [{'productId': 1, 'quantity': 2}], 'shipping': {'firstName': 'Jane', 'lastName': 'Doe', 'email': 'jane@example.com', 'phone': '0412345678'}, 'payment': {'cardNumber': '4111111111111111', 'ex...</msg>
+<var>${payload}</var>
+<arg>items=${items}</arg>
+<arg>shipping=${shipping}</arg>
+<arg>payment=${payment}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.306265" elapsed="0.000103"/>
+</kw>
+<return>
+<value>${payload}</value>
+<status status="PASS" start="2026-07-06T14:03:04.306386" elapsed="0.000010"/>
+</return>
+<msg time="2026-07-06T14:03:04.306436" level="INFO">${payload} = {'items': [{'productId': 1, 'quantity': 2}], 'shipping': {'firstName': 'Jane', 'lastName': 'Doe', 'email': 'jane@example.com', 'phone': '0412345678'}, 'payment': {'cardNumber': '4111111111111111', 'ex...</msg>
+<var>${payload}</var>
+<status status="PASS" start="2026-07-06T14:03:04.305634" elapsed="0.000810"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.307376" level="INFO">POST Request : url=http://localhost:3001/orders 
+ path_url=/orders 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM', 'Content-Length': '234', 'Content-Type': 'application/json'} 
+ body=b'{"items": [{"productId": 1, "quantity": 2}], "shipping": {"firstName": "Jane", "lastName": "Doe", "email": "jane@example.com", "phone": "0412345678"}, "payment": {"cardNumber": "4111111111111111", "expiryDate": "12/28", "cvv": "123"}}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.307401" level="INFO">POST Response : url=http://localhost:3001/orders 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '291', 'ETag': 'W/"123-siKYKsYTQa+r7PVV1IqxuFbHnFw"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"id":"ORD-1783360984307","userId":1,"items":[{"productId":1,"quantity":2}],"shipping":{"firstName":"Jane","lastName":"Doe","email":"jane@example.com","phone":"0412345678"},"payment":{"last4":"1111","expiryDate":"12/28"},"total":0,"status":"confirmed","createdAt":"2026-07-06T18:03:04.307Z"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.307457" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/orders</arg>
+<arg>json=${payload}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.306476" elapsed="0.000990"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.307678" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>201</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.307509" elapsed="0.000190"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.303260" elapsed="0.004476"/>
+</test>
+<test id="s1-t30" name="Place Order With Missing Required Field Returns 400" line="227">
+<kw name="Get Auth Headers">
+<kw name="Get Auth Token" owner="techshop_keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.308168" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.308086" elapsed="0.000092"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.309132" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '57', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.309167" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '275', 'ETag': 'W/"113-XSGV1Fy0aGWc5D3XEZeq7YmcPG0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM","user":{"id":1,"email":"demo@techshop.com","name":"Demo User"}} 
+ </msg>
+<msg time="2026-07-06T14:03:04.309231" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.308214" elapsed="0.001035"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.309574" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.309323" elapsed="0.000281"/>
+</kw>
+<return>
+<value>${response.json()}[token]</value>
+<status status="PASS" start="2026-07-06T14:03:04.309632" elapsed="0.000023"/>
+</return>
+<msg time="2026-07-06T14:03:04.309850" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM</msg>
+<var>${token}</var>
+<status status="PASS" start="2026-07-06T14:03:04.308013" elapsed="0.001852"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.310012" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.309917" elapsed="0.000111"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-07-06T14:03:04.310046" elapsed="0.000011"/>
+</return>
+<msg time="2026-07-06T14:03:04.310102" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-07-06T14:03:04.307926" elapsed="0.002185"/>
+</kw>
+<kw name="Build Valid Order Payload">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.310531" level="INFO">${item} = {'productId': 1, 'quantity': 2}</msg>
+<var>${item}</var>
+<arg>productId=${1}</arg>
+<arg>quantity=${2}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.310293" elapsed="0.000252"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.310640" level="INFO">${items} = [{'productId': 1, 'quantity': 2}]</msg>
+<var>${items}</var>
+<arg>${item}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.310588" elapsed="0.000061"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.310747" level="INFO">${shipping} = {'firstName': 'Jane', 'lastName': 'Doe', 'email': 'jane@example.com', 'phone': '0412345678'}</msg>
+<var>${shipping}</var>
+<arg>firstName=Jane</arg>
+<arg>lastName=Doe</arg>
+<arg>email=jane@example.com</arg>
+<arg>phone=0412345678</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.310685" elapsed="0.000072"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.310856" level="INFO">${payment} = {'cardNumber': '4111111111111111', 'expiryDate': '12/28', 'cvv': '123'}</msg>
+<var>${payment}</var>
+<arg>cardNumber=4111111111111111</arg>
+<arg>expiryDate=12/28</arg>
+<arg>cvv=123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.310797" elapsed="0.000071"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.311002" level="INFO">${payload} = {'items': [{'productId': 1, 'quantity': 2}], 'shipping': {'firstName': 'Jane', 'lastName': 'Doe', 'email': 'jane@example.com', 'phone': '0412345678'}, 'payment': {'cardNumber': '4111111111111111', 'ex...</msg>
+<var>${payload}</var>
+<arg>items=${items}</arg>
+<arg>shipping=${shipping}</arg>
+<arg>payment=${payment}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.310906" elapsed="0.000105"/>
+</kw>
+<return>
+<value>${payload}</value>
+<status status="PASS" start="2026-07-06T14:03:04.311030" elapsed="0.000010"/>
+</return>
+<msg time="2026-07-06T14:03:04.311081" level="INFO">${payload} = {'items': [{'productId': 1, 'quantity': 2}], 'shipping': {'firstName': 'Jane', 'lastName': 'Doe', 'email': 'jane@example.com', 'phone': '0412345678'}, 'payment': {'cardNumber': '4111111111111111', 'ex...</msg>
+<var>${payload}</var>
+<status status="PASS" start="2026-07-06T14:03:04.310190" elapsed="0.000899"/>
+</kw>
+<kw name="Remove From Dictionary" owner="Collections">
+<msg time="2026-07-06T14:03:04.311166" level="INFO">Removed item with key 'shipping' and value '{'firstName': 'Jane', 'lastName': 'Doe', 'email': 'jane@example.com', 'phone': '0412345678'}'.</msg>
+<arg>${payload}</arg>
+<arg>shipping</arg>
+<doc>Removes the given ``keys`` from the ``dictionary``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.311120" elapsed="0.000065"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.312203" level="INFO">POST Request : url=http://localhost:3001/orders 
+ path_url=/orders 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM', 'Content-Length': '128', 'Content-Type': 'application/json'} 
+ body=b'{"items": [{"productId": 1, "quantity": 2}], "payment": {"cardNumber": "4111111111111111", "expiryDate": "12/28", "cvv": "123"}}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.312267" level="INFO">POST Response : url=http://localhost:3001/orders 
+ status=400, reason=Bad Request 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '44', 'ETag': 'W/"2c-4P7mrE7PwqIh889XjDXhQJDNw8c"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"All shipping fields are required"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.312306" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/orders</arg>
+<arg>json=${payload}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.311224" elapsed="0.001092"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.312539" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>400</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.312370" elapsed="0.000190"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.307796" elapsed="0.004801"/>
+</test>
+<test id="s1-t31" name="Place Order With Invalid Payment Data Returns 400" line="234">
+<kw name="Get Auth Headers">
+<kw name="Get Auth Token" owner="techshop_keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.313041" level="INFO">${body} = {'email': 'demo@techshop.com', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.312955" elapsed="0.000096"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.313905" level="INFO">POST Request : url=http://localhost:3001/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '57', 'Content-Type': 'application/json'} 
+ body=b'{"email": "demo@techshop.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.313943" level="INFO">POST Response : url=http://localhost:3001/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '275', 'ETag': 'W/"113-XSGV1Fy0aGWc5D3XEZeq7YmcPG0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM","user":{"id":1,"email":"demo@techshop.com","name":"Demo User"}} 
+ </msg>
+<msg time="2026-07-06T14:03:04.313989" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.313088" elapsed="0.000911"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.314228" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.314053" elapsed="0.000196"/>
+</kw>
+<return>
+<value>${response.json()}[token]</value>
+<status status="PASS" start="2026-07-06T14:03:04.314268" elapsed="0.000013"/>
+</return>
+<msg time="2026-07-06T14:03:04.314439" level="INFO">${token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM</msg>
+<var>${token}</var>
+<status status="PASS" start="2026-07-06T14:03:04.312881" elapsed="0.001568"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.314568" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.314490" elapsed="0.000089"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-07-06T14:03:04.314595" elapsed="0.000010"/>
+</return>
+<msg time="2026-07-06T14:03:04.314645" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfU...</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-07-06T14:03:04.312792" elapsed="0.001861"/>
+</kw>
+<kw name="Build Valid Order Payload">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.315041" level="INFO">${item} = {'productId': 1, 'quantity': 2}</msg>
+<var>${item}</var>
+<arg>productId=${1}</arg>
+<arg>quantity=${2}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.314796" elapsed="0.000256"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.315148" level="INFO">${items} = [{'productId': 1, 'quantity': 2}]</msg>
+<var>${items}</var>
+<arg>${item}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.315096" elapsed="0.000061"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.315261" level="INFO">${shipping} = {'firstName': 'Jane', 'lastName': 'Doe', 'email': 'jane@example.com', 'phone': '0412345678'}</msg>
+<var>${shipping}</var>
+<arg>firstName=Jane</arg>
+<arg>lastName=Doe</arg>
+<arg>email=jane@example.com</arg>
+<arg>phone=0412345678</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.315194" elapsed="0.000079"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.315373" level="INFO">${payment} = {'cardNumber': '4111111111111111', 'expiryDate': '12/28', 'cvv': '123'}</msg>
+<var>${payment}</var>
+<arg>cardNumber=4111111111111111</arg>
+<arg>expiryDate=12/28</arg>
+<arg>cvv=123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.315319" elapsed="0.000062"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.315512" level="INFO">${payload} = {'items': [{'productId': 1, 'quantity': 2}], 'shipping': {'firstName': 'Jane', 'lastName': 'Doe', 'email': 'jane@example.com', 'phone': '0412345678'}, 'payment': {'cardNumber': '4111111111111111', 'ex...</msg>
+<var>${payload}</var>
+<arg>items=${items}</arg>
+<arg>shipping=${shipping}</arg>
+<arg>payment=${payment}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.315417" elapsed="0.000105"/>
+</kw>
+<return>
+<value>${payload}</value>
+<status status="PASS" start="2026-07-06T14:03:04.315607" elapsed="0.000011"/>
+</return>
+<msg time="2026-07-06T14:03:04.315663" level="INFO">${payload} = {'items': [{'productId': 1, 'quantity': 2}], 'shipping': {'firstName': 'Jane', 'lastName': 'Doe', 'email': 'jane@example.com', 'phone': '0412345678'}, 'payment': {'cardNumber': '4111111111111111', 'ex...</msg>
+<var>${payload}</var>
+<status status="PASS" start="2026-07-06T14:03:04.314716" elapsed="0.000956"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${payload}[payment]</arg>
+<arg>cardNumber=1234</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.315705" elapsed="0.000055"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.316845" level="INFO">POST Request : url=http://localhost:3001/orders 
+ path_url=/orders 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJkZW1vQHRlY2hzaG9wLmNvbSIsIm5hbWUiOiJEZW1vIFVzZXIiLCJpYXQiOjE3ODMzNjA5ODQsImV4cCI6MTc4MzM2NDU4NH0.38M4WHMKepUF3kQfUBqobKB1H6Uc2D_cXH_1Pt4jBIM', 'Content-Length': '222', 'Content-Type': 'application/json'} 
+ body=b'{"items": [{"productId": 1, "quantity": 2}], "shipping": {"firstName": "Jane", "lastName": "Doe", "email": "jane@example.com", "phone": "0412345678"}, "payment": {"cardNumber": "1234", "expiryDate": "12/28", "cvv": "123"}}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.316871" level="INFO">POST Response : url=http://localhost:3001/orders 
+ status=400, reason=Bad Request 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '41', 'ETag': 'W/"29-lNYTmAqYahjJVyhbximmuM6DWT0"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"Card number must be 16 digits"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.316905" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/orders</arg>
+<arg>json=${payload}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.315796" elapsed="0.001119"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.317129" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>400</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.316960" elapsed="0.000189"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.312656" elapsed="0.004534"/>
+</test>
+<test id="s1-t32" name="Place Order Without Auth Header Returns 401" line="241">
+<kw name="Build Valid Order Payload">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.317768" level="INFO">${item} = {'productId': 1, 'quantity': 2}</msg>
+<var>${item}</var>
+<arg>productId=${1}</arg>
+<arg>quantity=${2}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.317495" elapsed="0.000289"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.317907" level="INFO">${items} = [{'productId': 1, 'quantity': 2}]</msg>
+<var>${items}</var>
+<arg>${item}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.317844" elapsed="0.000072"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.318021" level="INFO">${shipping} = {'firstName': 'Jane', 'lastName': 'Doe', 'email': 'jane@example.com', 'phone': '0412345678'}</msg>
+<var>${shipping}</var>
+<arg>firstName=Jane</arg>
+<arg>lastName=Doe</arg>
+<arg>email=jane@example.com</arg>
+<arg>phone=0412345678</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.317955" elapsed="0.000075"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.318124" level="INFO">${payment} = {'cardNumber': '4111111111111111', 'expiryDate': '12/28', 'cvv': '123'}</msg>
+<var>${payment}</var>
+<arg>cardNumber=4111111111111111</arg>
+<arg>expiryDate=12/28</arg>
+<arg>cvv=123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.318069" elapsed="0.000063"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.318265" level="INFO">${payload} = {'items': [{'productId': 1, 'quantity': 2}], 'shipping': {'firstName': 'Jane', 'lastName': 'Doe', 'email': 'jane@example.com', 'phone': '0412345678'}, 'payment': {'cardNumber': '4111111111111111', 'ex...</msg>
+<var>${payload}</var>
+<arg>items=${items}</arg>
+<arg>shipping=${shipping}</arg>
+<arg>payment=${payment}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.318169" elapsed="0.000106"/>
+</kw>
+<return>
+<value>${payload}</value>
+<status status="PASS" start="2026-07-06T14:03:04.318295" elapsed="0.000014"/>
+</return>
+<msg time="2026-07-06T14:03:04.318353" level="INFO">${payload} = {'items': [{'productId': 1, 'quantity': 2}], 'shipping': {'firstName': 'Jane', 'lastName': 'Doe', 'email': 'jane@example.com', 'phone': '0412345678'}, 'payment': {'cardNumber': '4111111111111111', 'ex...</msg>
+<var>${payload}</var>
+<status status="PASS" start="2026-07-06T14:03:04.317413" elapsed="0.000949"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.319374" level="INFO">POST Request : url=http://localhost:3001/orders 
+ path_url=/orders 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '234', 'Content-Type': 'application/json'} 
+ body=b'{"items": [{"productId": 1, "quantity": 2}], "shipping": {"firstName": "Jane", "lastName": "Doe", "email": "jane@example.com", "phone": "0412345678"}, "payment": {"cardNumber": "4111111111111111", "expiryDate": "12/28", "cvv": "123"}}' 
+ </msg>
+<msg time="2026-07-06T14:03:04.319401" level="INFO">POST Response : url=http://localhost:3001/orders 
+ status=401, reason=Unauthorized 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '29', 'ETag': 'W/"1d-TdeScqFQy+dbnhB6tfnSArDhevg"', 'Date': 'Mon, 06 Jul 2026 18:03:04 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"error":"No token provided"} 
+ </msg>
+<msg time="2026-07-06T14:03:04.319436" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>techshop</arg>
+<arg>/orders</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.318396" elapsed="0.001048"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-07-06T14:03:04.319662" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>401</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-07-06T14:03:04.319490" elapsed="0.000195"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.317264" elapsed="0.002463"/>
+</test>
+<kw name="Close Techshop Session" owner="techshop_keywords" type="TEARDOWN">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2026-07-06T14:03:04.320457" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2026-07-06T14:03:04.320430" elapsed="0.000060"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.319966" elapsed="0.000578"/>
+</kw>
+<status status="PASS" start="2026-07-06T14:03:04.142498" elapsed="0.178058"/>
+</suite>
+<statistics>
+<total>
+<stat pass="32" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Techshop" id="s1" pass="32" fail="0" skip="0">Techshop</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
