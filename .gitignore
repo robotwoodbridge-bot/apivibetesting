@@ -8,3 +8,6 @@ __pycache__/
 .pytest_cache/
 venv/
 *.mcp.json
+report.html
+log.html
+output.xml
